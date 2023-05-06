@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100mm" height="100mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 10000 10000"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str1 {stroke:#007CC6;stroke-width:20;stroke-miterlimit:22.9256}
+    .str2 {stroke:#212845;stroke-width:20;stroke-miterlimit:22.9256}
+    .str3 {stroke:#7CC6ED;stroke-width:20;stroke-miterlimit:22.9256}
+    .str0 {stroke:#B4E4FB;stroke-width:20;stroke-miterlimit:22.9256}
+    .fil1 {fill:#007CC6}
+    .fil2 {fill:#212845}
+    .fil3 {fill:#7CC6ED}
+    .fil0 {fill:#B4E4FB}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1623777507584">
+   <path class="fil0 str0" d="M4968.76 7935.67c-1159.07,-2445.66 -3805.24,-3304.96 -3805.24,-3304.96l2536.84 -2577.85c0,0 1151.28,1473.93 1275.45,3072.46 124.17,1598.53 -7.05,2810.35 -7.05,2810.35z"/>
+   <path class="fil1 str1" d="M4932.9 7879.61c-940.38,-1858.91 -3586.55,-2689.9 -3586.55,-2689.9l-590.45 568.59c0,0 2930.48,590.48 4177,2121.31z"/>
+   <path class="fil2 str2" d="M4963.64 7962.97c-1792.42,-1297.5 -4570.67,-1290.29 -4570.67,-1290.29l634.22 -546.74c0,0 2637.03,351.3 3936.45,1837.03z"/>
+   <path class="fil3 str3" d="M5023.63 7927.45c1159.07,-2445.66 3805.24,-3304.95 3805.24,-3304.95l-2536.84 -2577.86c0,0 -1151.28,1473.93 -1275.45,3072.46 -124.17,1598.53 7.05,2810.35 7.05,2810.35z"/>
+   <path class="fil1 str1" d="M5079.82 7851.07c940.38,-1858.91 3586.55,-2689.91 3586.55,-2689.91l590.45 568.59c0,0 -2930.48,590.48 -4177,2121.32z"/>
+   <path class="fil2 str2" d="M5028.75 7954.75c1792.42,-1297.49 4570.67,-1290.28 4570.67,-1290.28l-634.22 -546.74c0,0 -2637.03,351.3 -3936.45,1837.02z"/>
+  </g>
+ </g>
+</svg>
