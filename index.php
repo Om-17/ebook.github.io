@@ -36,26 +36,82 @@ session_start();
 </head>
 
 <body>
-  <?php include_once('./config/js.config.php') ?>
 
   <?php include_once('./includes/header.php') ?>
   <?php include_once('./loader.php') ?>
 
 
   <main>
-    <section>
+    <section class="section-home-banner">
       <?php
       if (isset($_SESSION['user'])) {
         // print_r($_SESSION['user']);
-
+      
       }
       ?>
-     
+      <div class="row bg-pattern ">
+        <div class="col-7 d-flex  align-items-center">
+          <div class="left-side ">
+            <span>
+              sfdgdgdsgsgsg
+            </span>
+            <h1>
+              We provide best eBooks frees
+            </h1>
+            <p>
+              sgdskh dksmhf dhkfmh fkdhm fhkfmhfmhf skhm fihdss ixj ijdgdsd  ihdasdas
+            </p>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="right-side">
+  <!-- Swiper -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+      </div>
+      <div class="swiper-slide">
+        <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+      </div>
+      <div class="swiper-slide">
+        <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+      </div>
+   
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+          </div>
+        </div>
+      </div>
+
 
     </section>
 
   </main>
   <?php include_once('./includes/footer.php') ?>
+  <?php include_once('./config/js.config.php') ?>
+
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+     
+      coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      },
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+    });
+  </script>
 
 </body>
 
