@@ -4,11 +4,14 @@
 (()=>{
 
     $(document).ready(function () {
+       
         setTimeout(() => {
             $('.loader').hide();
                 
             }, 
             800);
+      
+
      });
      $(window).on('load', function () {
       

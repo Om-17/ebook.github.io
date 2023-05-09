@@ -7,6 +7,7 @@
     --hover-primary-color:#1242b3;
     --active-primary-color:#001f68;
     --secondary-color: #1877F2;
+    --bg-section-home: rgb(164, 211, 255);
     /* --secondary:#2D68C4; */
     /* --primary-light:#ADD8E6; */
     --light-primary-color: #76ABDF;
@@ -71,6 +72,8 @@
     --font-size-h6:1.5em;
     /* font family    */
     --font-family-primary:"Nunito", sans-serif;
+    --font-family-secondary: "Noto Serif",serif;
+
 
     /* shadow  */
     --nav-shadow-box:0px 2px 20px rgba(1, 41, 112, 0.1);

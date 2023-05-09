@@ -140,7 +140,7 @@
                                 positionClass: 'toast-top-right'
                             };
                             toastr.error("Error", data.responseJSON.error);
-                            console.log(data.responseJSON.error);
+                            console.log(data);
                             
                         }, 1000);
 

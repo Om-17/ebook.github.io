@@ -10,6 +10,7 @@ class User extends AbstractDB implements ModelsInterface
   public $email;
   public $last_name;
   public $mobile_no;
+  public $is_admin = false;
   public function create()
   {
     $context = array();
@@ -59,8 +60,8 @@ class User extends AbstractDB implements ModelsInterface
     }
 
 
-    $sql = "INSERT INTO users (first_name, last_name, username, password, email,mobile_no)
-            VALUES (:first_name, :last_name, :username, :password, :email,:mobile_no)";
+    $sql = "INSERT INTO users (first_name, last_name, username, password, email,mobile_no,is_admin)
+            VALUES (:first_name, :last_name, :username, :password, :email,:mobile_no,:is_admin)";
 
     // prepare statement
     $stmt = $this->conn->prepare($sql);
@@ -69,6 +70,7 @@ class User extends AbstractDB implements ModelsInterface
     $stmt->bindValue(':username', $this->username);
     $stmt->bindValue(':password', password_hash($this->password, PASSWORD_DEFAULT));
     $stmt->bindValue(':email', $this->email);
+    $stmt->bindValue(':is_admin', $this->is_admin);
 
     // optinal field
     if (isset($this->last_name)) {
