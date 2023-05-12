@@ -38,8 +38,9 @@ if($request_method == 'POST'){
         if($result!=null){
             
             if (password_verify($password, $result['password'])) {
-                // session_start();
-                // $_SESSION["user"]=$result;
+                session_start();
+                $_SESSION["user"]=$result;
+                
                 $data["results"]=$result;
                 http_response_code(200);
 

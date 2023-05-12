@@ -59,9 +59,9 @@
                                 </form>
                                 <div class="d-flex row align-items-center justify-content-between">
 
-                                    <a href="#"
+                                    <!-- <a href="#"
                                         class=" col-lg-4 col-xl-4 col-xxl-4 col-md-12 col-sm-12 col-xs-12 forgot-password-link">Forgot
-                                        password?</a>
+                                        password?</a> -->
                                     <p
                                         class=" col-lg-8 col-xl-8 col-xxl-8 col-md-12 col-sm-12 col-xs-12 login-card-footer-text mt-2 h6">
                                         Don't have an account? <a href="./signup"
@@ -106,29 +106,24 @@
                     // data:form.serialize(),
                     // serializes the form's elements.
                     success: function (data) {
-                        // console.log(data.results);
-                        
-                        $.ajax({
-                            url: 'http://localhost/ebook/setsession.php',
-                            method: 'POST',
-                            data: JSON.stringify(data.results),
-                            success: function (data) {
-                                toastr.options = {
+                        console.log(data.results.is_admin);
+                        setTimeout(function(){
+                            toastr.options = {
                                     closeButton: true,
                                     timeOut: 5000,
                                     positionClass: 'toast-top-right'
                                 };
                                 toastr.success('Login successful');
-                                console.log('Session variable set successfully.');
-                                setTimeout(function(){
-                                    window.location.href = "./";
+                                    if(data.results.is_admin==1){
+                                        console.log('yser')
+                                        window.location.href = "./admin/index.php";
+                                    }
+                                    else{
+                                        window.location.href = "./";
 
-                                },1000)
-                            },
-                            error: function (data) {
-                                console.log('Error setting session variable.');
-                            }
-                        });
+                                    }
+
+                                },1000) 
 
                     },
                     error: function (data) {
