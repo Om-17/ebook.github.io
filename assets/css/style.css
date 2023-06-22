@@ -243,6 +243,10 @@ hr{
   left: 100%;
   visibility: visible;
 }
+.dropdown-item:active{
+  background-color: var(--active-primary-color) !important;
+  color: var(--white) !important;
+}
 
 @media (max-width: 1366px) {
   .navbar .dropdown .dropdown ul {
@@ -665,6 +669,7 @@ input:invalid{
   padding-top: 120px;
 }
 
+
 .swiper {
   width: 100%;  
   position: relative !important;
@@ -1030,8 +1035,6 @@ input:invalid{
     transform: none;
   }
 }
-
-
 
 
 

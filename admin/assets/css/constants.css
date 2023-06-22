@@ -1,0 +1,80 @@
+:root {
+
+    /* --body-gradient-color:linear-gradient(90deg, rgba(7,151,240,1) 0%, rgba(149,221,255,1) 55%, rgba(231,242,245,1) 98%) ; */
+    /* --body-gradient-color:#add7ff; */
+    --body-gradient-color:#c8e3fc;
+    --primary-color: #0E3386;
+    --hover-primary-color:#1242b3;
+    --active-primary-color:#001f68;
+    --secondary-color: #1877F2;
+    --bg-section-home: rgb(164, 211, 255);
+    /* --secondary:#2D68C4; */
+    /* --primary-light:#ADD8E6; */
+    --light-primary-color: #76ABDF;
+    /* --primary-light:#F0F8FF; */
+    --light-secondary-color: #e3effa;
+    --red: #E32636;
+    --dark-red:#FF033E;
+    --light-red:#fd5c63;
+    --blue: #1e90ff;
+    --dark-blue:#0E3386;
+    --light-blue:#ADD8E6;
+    --blue-100:#F0F8FF;
+    --black: #161616;
+    --dark-black:#000;
+    --gry: #7c7c7c;
+    --light-black:#1d1d1d;
+    --white: #ffffff;
+    --light-white: #f5f5f5;
+    --purple: #662d91;
+    --ligth-purple: #E6E6FA;
+    --dark-purple:#4B0082;
+    --yellow: #FFFF00;
+    --gold-yellow: #FFD700;
+    --pink:#FF00BF;
+    --ligth-pink: #FFC0CB;
+    --baby-pink:#FF69B4;
+    --green: #32de84;
+    --light-green: #90EE90;
+    --dark-green: #006A4E;
+
+    --h1:3.5em;
+    --h2:2.8em;
+    --h3:2.5em;
+    --h4:1.7em;
+    --h5:1.2em;
+    --h6:.80em;
+    /* font lineheight  */
+    --line-heigth-h6:1.1em;
+    --line-heigth-h5:1.6em;
+    --line-heigth-h4:2em;
+    --line-heigth-h3:2.5em;
+    --line-heigth-h2:3em;
+    --line-heigth-h1:3.7em;
+    /* font weigth   */
+    --font-weight-light:300;
+    --font-weight-regular:normal;
+    --font-weight-medium:500;
+    --font-weight-bold:900;
+    --font-weight-bolder:700;
+    --font-weight-normal:600;
+    /* font size   */
+    --font-size-large:4em;
+    --font-size-normal:2em;
+    --font-size-medium:2.5em;
+    --font-size-small:1.1em;
+    --font-size-xsmall:0.90em;
+    --font-size-h1:4em;
+    --font-size-h2:3.5em;
+    --font-size-h3:3em;
+    --font-size-h4:2.5em;
+    --font-size-h5:2em;
+    --font-size-h6:1.5em;
+    /* font family    */
+    --font-family-primary:"Nunito", sans-serif;
+    --font-family-secondary: "Noto Serif",serif;
+
+
+    /* shadow  */
+    --nav-shadow-box:0px 2px 20px rgba(1, 41, 112, 0.1);
+}

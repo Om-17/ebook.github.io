@@ -70,7 +70,7 @@ if ($request_method == 'POST') {
         $user->password = $password;
         $result = $user->create();
 
-        if ($result["error"]) {
+        if (isset($result["error"])) {
             http_response_code(400);
             echo json_encode($result);
 

@@ -1,10 +1,16 @@
+<?php 
+session_start();
 
+require_once('./models.php');
+check_admin()
 
-<header id="header" class="header fixed-top d-flex align-items-center">
+?>
+
+<nav id="header" class="header fixed-top d-flex align-items-center">
 
 <div class="d-flex align-items-center justify-content-between">
     <i class="bi bi-list toggle-sidebar-btn"></i>&nbsp;&nbsp;
-  <a href="index.html" class="logo d-flex align-items-center">
+  <a href="./index.php" class="logo d-flex align-items-center">
     <!-- <img src="assets/img/logo.png" alt=""> -->
     <span class="d-none d-lg-block">Bookswise Admin</span>
   </a>
@@ -48,7 +54,7 @@
       <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
         <li class="dropdown-header">
          <?php echo '<h6>'.$_SESSION['user']['first_name'].'&nbsp;'.$_SESSION['user']['last_name'].'</h6>
-          <span>'.$_SESSION['user']['email'].'</span>';?>
+          <span>'.$_SESSION['user']['email'].'</span>' ?>
         </li>
         <li>
           <hr class="dropdown-divider">
@@ -86,7 +92,7 @@
         </li>
 
         <li>
-          <a class="dropdown-item d-flex align-items-center" href="../logout.php">
+          <a class="dropdown-item d-flex align-items-center" href="../app/logout.php">
             <i class="bi bi-box-arrow-right"></i>
             <span>LogOut</span>
           </a>
@@ -98,4 +104,4 @@
   </ul>
 </nav><!-- End Icons Navigation -->
 
-</header><!-- End Header -->
+</nav><!-- End Header -->

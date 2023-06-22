@@ -38,9 +38,13 @@ if($request_method == 'POST'){
         if($result!=null){
             
             if (password_verify($password, $result['password'])) {
+                $updatelastLogin=new User();
+                $params=[
+                    "last_login"=>  date("Y-m-d H:i:s")
+                ];
+                $updatelastLogin->update('id',$result['id'],$params);
                 session_start();
                 $_SESSION["user"]=$result;
-                
                 $data["results"]=$result;
                 http_response_code(200);
 

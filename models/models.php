@@ -1,8 +1,9 @@
 <?php
 // $Dir= (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-require('../interface/interface.php');
+require_once('../interface/interface.php');
+require_once('../config.php');
 
-class User extends AbstractDB implements ModelsInterface
+class User extends DBconnection implements ModelsInterface
 {
   public $first_name;
   public $username;
@@ -129,11 +130,10 @@ class User extends AbstractDB implements ModelsInterface
       $i++;
     }
     $sql .= " WHERE $field = :fieldvalue";
-    echo $sql;
+    // echo $sql;
     $stmt = $this->conn->prepare($sql);
     $stmt->bindValue(':fieldvalue', $fieldvalue);
-    // $stmt->bindParam(':first_name',$params['first_name']);
-    // $stmt->bindParam(':last_name',$params['last_name']);
+
     foreach ($params as $key => $value) {
       $stmt->bindValue(':' . $key, $value);
     }
@@ -144,8 +144,7 @@ class User extends AbstractDB implements ModelsInterface
 
   public function filter($filter_conditions)
   {
-    // Connect to the database
-    $conn = new Database();
+    
     $context = [];
 
 
@@ -158,7 +157,7 @@ class User extends AbstractDB implements ModelsInterface
 
     $sql .= implode(" AND ", $conditions);
 
-    $stmt = $conn->prepare($sql);
+    $stmt = $this->conn->prepare($sql);
 
     foreach ($filter_conditions as $column => $value) {
       $stmt->bindValue(":$column", $value);
@@ -176,6 +175,7 @@ class User extends AbstractDB implements ModelsInterface
   }
   public function manyfieldsearch($params)
   {
+    
     $sql = "SELECT * FROM users WHERE ";
     $i = 0;
     foreach ($params as $key => $value) {
@@ -196,18 +196,18 @@ class User extends AbstractDB implements ModelsInterface
       return $context;
     }
     return $results;
+ 
   }
   public function search($search)
   {
 
-    $conn = new Database();
 
     // $sql = "SELECT * FROM users WHERE LOWER(first_name) LIKE LOWER(:search) OR LOWER(last_name) LIKE LOWER(:search)";
     // $sql = "SELECT * FROM users WHERE LOWER(first_name) LIKE :search OR LOWER(username) LIKE LOWER(:search1)";
     $sql = "SELECT * FROM users WHERE LOWER(first_name) LIKE LOWER(:search) OR LOWER(last_name) LIKE LOWER(:search1) OR LOWER(email) LIKE LOWER(:search2) OR LOWER(username) LIKE LOWER(:search3)";
 
 
-    $stmt = $conn->prepare($sql);
+    $stmt = $this->conn->prepare($sql);
 
     $stmt->bindValue(':search', '%' . $search . '%');
     $stmt->bindValue(':search1', '%' . $search . '%');
@@ -230,7 +230,7 @@ class User extends AbstractDB implements ModelsInterface
 }
 ;
 
-$user = new User();
+// $user = new User();
 
 
 

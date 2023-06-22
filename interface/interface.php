@@ -1,17 +1,4 @@
 <?php
-require('../config/DBconnection.php');
-
-abstract class AbstractDB{
-    public $conn;
-    public function __construct() {
-        $this->conn =new Database();
-
-      }
-    public function __destruct(){
-        // close connection database 
-        $this->conn=null;
-      }
-}
 
 interface ModelsInterface{
 

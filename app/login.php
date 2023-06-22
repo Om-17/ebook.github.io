@@ -1,3 +1,10 @@
+<?php include_once('../config.php');
+if (isset($_SESSION['User']))
+{
+    header('Location: home.php');
+    exit();
+}
+?>
 <html lang="en">
 
 <head>
@@ -5,13 +12,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <?php include_once('./config/css.config.php') ?>
+    <?php include_once('../config/css.config.php') ?>
     <title>eBooks</title>
 </head>
 
 <body>
-    <?php include_once('./config/js.config.php') ?>
-    <?php include_once('./loader.php') ?>
+
+    <?php include_once('../config/js.config.php') ?>
+    <?php include_once('../loader.php') ?>
     <main>
         <section class="section-login d-flex align-items-center min-vh-100 py-3 py-md-0">
             <div id="toast"></div>
@@ -26,9 +34,13 @@
                     </div>
                     <div class="row no-gutters">
                         <div class="col-md-6  d-flex align-items-center  justify-content-center ">
-                            <img src="./assets/img/login-icon.svg" alt="login"
-                                class="col-sm-8 col-xl-11 col-lg-11 col-md-12 login-card-img   img-fluid">
+                        <?php 
+                        
+                        echo'   
+                        <img src="'.base_url.'assets/img/login-icon.svg" alt="login"
+                                class="col-sm-8 col-xl-11 col-lg-11 col-md-12 login-card-img   img-fluid">'
 
+                                ?>
                         </div>
                         <div class="col-md-6 d-flex align-items-center">
 
@@ -106,7 +118,7 @@
                     // data:form.serialize(),
                     // serializes the form's elements.
                     success: function (data) {
-                        console.log(data.results.is_admin);
+                        console.log(data.results);
                         setTimeout(function(){
                             toastr.options = {
                                     closeButton: true,
@@ -116,7 +128,7 @@
                                 toastr.success('Login successful');
                                     if(data.results.is_admin==1){
                                         console.log('yser')
-                                        window.location.href = "./admin/index.php";
+                                        window.location.href = "../admin/index.php";
                                     }
                                     else{
                                         window.location.href = "./";

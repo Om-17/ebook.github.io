@@ -5,7 +5,7 @@
       <i onclick="openNav()" class="bi bi-list mobile-nav-toggle"></i>
       <a href="./index.php" >
 
-        <img src="./assets/img/logo.svg" width="80px" height="70px"   class="img-fluid" alt="">
+        <img src="../assets/img/logo.svg" width="80px" height="70px"   class="img-fluid" alt="">
       </a>
       <a href="./index.php" class="  w-100  h-100 logo d-flex align-items-center">
           <span>BookWise</span>
