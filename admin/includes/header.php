@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-require_once('./models.php');
+require_once('../classes/masterclass.php');
 check_admin()
 
 ?>

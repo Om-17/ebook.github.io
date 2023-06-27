@@ -833,3 +833,7 @@ select.did-floating-select::-ms-expand {
   background-position: right 15px top 50%;
   background-repeat: no-repeat;
 }
+.table-body td{
+  text-align: center;
+  text-transform: capitalize !important;
+}

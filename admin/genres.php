@@ -1,5 +1,6 @@
 <?php
 include_once('./includes/header.php');
+include_once('../classes/genresclass.php');
 
 
 $genres = new Genres();
@@ -174,7 +175,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
 
   if ($request_method == 'POST') {
-    $master = new MasterModel('genres');
+    $master = new MasterClass('genres');
     if (isset($_POST['genre_name'])) {
 
       $genre_name = $_POST['genre_name'];

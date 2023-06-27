@@ -3,7 +3,7 @@ ob_start();
 
 $Dir= (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 require_once('initialize.php');
-require_once('models/DBconnection.php');
+require_once('classes/DBconnection.php');
 function redirect($url=''){
     if(!empty($url)){
         echo'<script type="text/javascript">

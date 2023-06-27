@@ -1,5 +1,4 @@
-<?php
-// $Dir= (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+<?php 
 require_once('../interface/interface.php');
 require_once('../config.php');
 
@@ -228,45 +227,5 @@ class User extends DBconnection implements ModelsInterface
     return $results;
   }
 }
-;
 
-// $user = new User();
-
-
-
-// $user = new User();
-
-// // filter
-
-// $filter_conditions = [
-//   'first_name' => 'John',
-//   'last_name' => 'Doe',
-//   'username'=>'om1234'
-// ];
-// $results = $user->filter($filter_conditions);
-// print_r($results);
-
-// // get data
-
-// $result=$user ->get('id','1');
-// // print_r($result);
-
-// update data
-
-// $params = array(
-//   'first_name' => 'om15',
-//   'last_name' => 'xyz',
-//   'username' => 'om1234',
-//   'password' => 'newpassword',
-//   'email' => 'johndoe17@example.com',
-//   'mobile_no' => '1234567899'
-// );
-// $user -> update('id','4',$params);
-// // print_r($sql);
-
-
-// search 
-
-// $results = $user->search("om");
-// print_r(json_encode($results))
 ?>

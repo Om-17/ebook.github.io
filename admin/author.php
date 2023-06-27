@@ -3,7 +3,7 @@
 include_once('./includes/header.php');
 
 
-$allauthor = new MasterModel('authors');
+$allauthor = new MasterClass('authors');
 $result = $allauthor->getAll();
 
 $request_method = $_SERVER["REQUEST_METHOD"];
@@ -175,7 +175,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
 
   if ($request_method == 'POST') {
-    $author= new MasterModel('authors');
+    $author= new MasterClass('authors');
     if (isset($_POST['author_name'])) {
       
       $author_name = $_POST['author_name'];

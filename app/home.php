@@ -84,9 +84,49 @@ c23.6,2.1,48.7,3.5,103.4-2.5c54.7-6,106.2-25.6,106.2-25.6V0H0v30.3c0,0,72,32.6,1
 c21.2-8.1,52.2-18.2,79.7-24.2C399.3,7.9,411.6,7.5,421.9,6.5z"></path>
 </svg>
       </div>
+     
     </section>
-    <section>
+    <section >
+    <br/>
+      <br/>
+      <br/> 
+    <br/>
+     
+      <div class="w-100 text-center ">
 
+        <h1>
+            Tending Books
+          </h1>
+      </div> 
+    <div class="w-100 container">
+    <div class="swiper tending_book_swiper  ">
+            <div class="swiper-wrapper" style="height:400px;margin-top: 50px;">
+              <div class="swiper-slide">
+                <img src="../assets/img/book1.jpg" class="img-fluid" />
+              </div>
+              <div class="swiper-slide">
+                <img src="../assets/img/book2.jpg" class="img-fluid" />
+              </div>
+              <div class="swiper-slide">
+                <img src="../assets/img/book3.png" class="img-fluid" />
+              </div>
+              <div class="swiper-slide">
+                <img src="../assets/img/book4.jpg" class="img-fluid" />
+              </div>
+              <div class="swiper-slide">
+                <img src="../assets/img/book5.jpg" class="img-fluid" />
+              </div>
+              <div class="swiper-slide">
+                <img src="../assets/img/book6.jpg" class="img-fluid" />
+              </div>
+
+
+            </div>
+            <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+          </div>
+    </div>
     </section>
     
   
@@ -113,6 +153,27 @@ c21.2-8.1,52.2-18.2,79.7-24.2C399.3,7.9,411.6,7.5,421.9,6.5z"></path>
       autoplay: {
         delay: 2500,
         disableOnInteraction: false,
+      },
+    });
+    var swiper = new Swiper(".tending_book_swiper", {
+      
+      
+   
+      slidesPerView: "auto",
+
+      spaceBetween: 30,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+    pauseOnMouseEnter: true,
       },
     });
   </script>

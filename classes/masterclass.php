@@ -1,75 +1,7 @@
 <?php
 require_once('../config.php');
-class Genres extends DBconnection
-{
-  public $genre_name;
 
-  public function create()
-  {
-    $context = array();
-
-    $usersql = "SELECT * FROM genres WHERE genre_name = :genre_name";
-    $stmt = $this->conn->prepare($usersql);
-    $stmt->bindParam(':genre_name', $this->genre_name);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($result) {
-      // genre already exists
-      $context["error"] = "genre already exists";
-      return $context;
-    }
-    $sql = "INSERT INTO genres (genre_name)
-    VALUES (:genre_name)";
-
-    // prepare statement
-    $stmt = $this->conn->prepare($sql);
-
-    $stmt->bindValue(':genre_name', $this->genre_name);
-    $stmt->execute();
-  
-    $context['message'] = "Genre created successfully";
-    return $context;
-  }
-  public function getAll()
-  {
-
-    $sql = "SELECT * FROM genres";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  
-    return $result;
-  }
-  public function get($field, $value)
-  {
-    $sql = "SELECT * FROM genres WHERE $field = :value";
-
-    $stmt = $this->conn->prepare($sql);
-
-    $stmt->bindParam(':value', $value);
-
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    return $result;
-  }
-  public function update($field, $fieldvalue, $params)
-  {
-  }
-  public function filter($filter_conditions)
-  {
-  }
-
-  public function search($search)
-  {
-  }
-  public function delete($field, $fieldvalue)
-  {
-  }
-}
-
-class MasterModel extends DBconnection
+class MasterClass extends DBconnection
 {
   private $table;
   public function __construct($tablename)
@@ -134,17 +66,19 @@ class MasterModel extends DBconnection
       }
 
       $stmt->execute();
+      $last_id=$this->conn->lastInsertId();
 
       $context = array(
         "message" => "Record created successfully.",
-        "status" => true
+        "status" => 1,
+        "last_id" => $last_id,
       );
     } catch (\Throwable $th) {
       $errorMessage = $th->getMessage();
       // Handle the error as per your requirements
       $context = array(
         "error" => $errorMessage,
-        "status" => false
+        "status" => 0
       );
     } finally {
       $stmt->closeCursor();
@@ -210,28 +144,27 @@ class MasterModel extends DBconnection
       return $data;
   }
   
-  public function exists($field, $fieldValue)
+  public  function  exists($field, $fieldValue)
   {
     $sql = "SELECT COUNT(*) FROM $this->table WHERE $field = :fieldValue";
-
     try {
-      $stmt = $this->conn->prepare($sql);
-      $stmt->bindParam(":fieldValue", $fieldValue);
-      $stmt->execute();
-
-      $result = $stmt->fetchColumn();
-
-      if ($result > 0) {
-        return true; // Record exists
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(":fieldValue", $fieldValue);
+        $stmt->execute();
+        
+        $result = $stmt->fetchColumn();
+        
+      if ($result != 0) {
+        return 1; // Record exists
       } else {
-        return false; // Record does not exist
+        return 0; // Record does not exist
       }
     } catch (\Throwable $th) {
+        // echo "Error: " . $th->getMessage();
       // Handle the error as per your requirements
-      return false;
-    } finally {
-      $stmt->closeCursor();
-    }
+      return 1;
+    } 
+    // return 1;
   }
   public function count($filterConditions)
   {
@@ -754,10 +687,6 @@ class QuerySet extends DBconnection
     return $orderByClause;
   }
 }
-// $querySet = new QuerySet('your_table');
-// $results = $querySet
-//     ->filter(['name' => 'John', 'age__gte' => 25])
-//     ->orderBy('age', 'desc')
-//     ->limit(10)
-//     ->offset(5)
-//     ->get();
+
+
+?>
