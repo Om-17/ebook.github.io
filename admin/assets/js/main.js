@@ -7,13 +7,27 @@
    */
 
   $(document).ready(function () {
-      
+  
     setTimeout(() => {
         $('.loader').hide();
             
         }, 
         800);
+      //   $("#yearpicker").datepicker({
+      //     format: "yyyy",
+      //     viewMode: "years", 
+      //     minViewMode: "years"
+      // });
+      var currentYear = new Date().getFullYear();
   
+      $("#yearpicker").datepicker({
+        format: "yyyy",
+        viewMode: "years",
+        minViewMode: "years",
+        endDate: currentYear.toString(),
+        autoclose: true
+      });
+
         jQuery(function() {
           jQuery('.multiSelect').each(function(e) {
             var self = jQuery(this);
@@ -386,5 +400,6 @@
   //     }).observe(mainContainer);
   //   }, 200);
   // }
+ 
 
 })();

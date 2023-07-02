@@ -586,6 +586,8 @@ class MasterClass extends DBconnection
 
     return $context;
   }
+ 
+ 
   public function __destruct(){
     $this->conn=null;
   }
@@ -688,5 +690,123 @@ class QuerySet extends DBconnection
   }
 }
 
+// public function createAllGenres()
+// {
+//   $genres = [
+//     "Action",
+//     "Adventure",
+//     "Biography",
+//     "Chick-lit",
+//     "Children's",
+//     "Comedy",
+//     "Crime",
+//     "Drama",
+//     "Fantasy",
+//     "Historical Fiction",
+//     "Horror",
+//     "Mystery",
+//     "Paranormal",
+//     "Poetry",
+//     "Romance",
+//     "Science Fiction",
+//     "Self-help",
+//     "Short Stories",
+//     "Suspense/Thriller",
+//     "Teen/Young Adult",
+//     "Travel",
+//     "Western",
+//     "Historical Non-fiction",
+//     "Science",
+//     "Philosophy",
+//     "Business",
+//     "Psychology",
+//     "Biography/Memoir",
+//     "Health/Fitness",
+//     "Cookbooks"
+//   ];
+
+//   foreach ($genres as $genre) {
+//     $params = ['genre_name' => $genre];
+//     $result = $this->create($params);
+
+//     if ($result['status'] === 1) {
+//       echo "Genre '$genre' inserted successfully. ID: " . $result['last_id'] . "\n";
+//     } else {
+//       echo "Failed to insert genre '$genre'. Error: " . $result['error'] . "\n";
+//     }
+//   }
+// }
+// public function createAllAuthor()
+// {
+//   $famousAuthors = [ 
+//     "William Shakespeare",
+//     "Charles Dickens",
+//     "Mark Twain",
+//     "Jane Austen",
+//     "Leo Tolstoy",
+//     "Fyodor Dostoevsky",
+//     "George Orwell",
+//     "J.R.R. Tolkien",
+//     "Ernest Hemingway",
+//     "Virginia Woolf",
+//     "Oscar Wilde",
+//     "Emily Dickinson",
+//     "Herman Melville",
+//     "Charlotte Brontë",
+//     "F. Scott Fitzgerald",
+//     "Victor Hugo",
+//     "Arthur Conan Doyle",
+//     "Agatha Christie",
+//     "Harper Lee",
+//     "Toni Morrison",
+//     "Gabriel Garcia Marquez",
+//     "J.K. Rowling",
+//     "John Steinbeck",
+//     "George R.R. Martin",
+//     "Miguel de Cervantes",
+//     "Ralph Waldo Emerson",
+//     "Rudyard Kipling",
+//     "Edgar Allan Poe",
+//     "Homer",
+//     "H.G. Wells",
+//     "Thomas Hardy",
+//     "Anton Chekhov",
+//     "Voltaire",
+//     "Edith Wharton",
+//     "James Joyce",
+//     "Aldous Huxley",
+//     "Nathaniel Hawthorne",
+//     "H.P. Lovecraft",
+//     "Franz Kafka",
+//     "Walt Whitman",
+//     "Jules Verne",
+//     "Charlotte Perkins Gilman",
+//     "Dante Alighieri",
+//     "Hans Christian Andersen",
+//     "John Milton",
+//     "Albert Camus",
+//     "Truman Capote",
+//     "Gustave Flaubert",
+//     "Kurt Vonnegut",
+//     "Mary Shelley"
+//   ];
+
+//   foreach ($famousAuthors as $author) { 
+//     $params = ['author_name' => $author];
+//     $exists = $this->exists("author_name",$author); 
+//     if($exists != 1){ 
+//       $result = $this->create($params);
+//       if ($result['status'] === 1) {
+//         echo "Genre '$author' inserted successfully. ID: " . $result['last_id'] . "\n";
+//       } else {
+//         echo "Failed to insert genre '$author'. Error: " . $result['error'] . "\n";
+//       }
+
+//     }else{ 
+//       echo "Author is Already existed" ; 
+//     }
+
+//   }
+// }
 
 ?>

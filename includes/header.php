@@ -1,13 +1,22 @@
+<?php
+
+session_start();
+include_once('../classes/masterclass.php');
+$genres_obj=new QuerySet('genres');
+$genres_result=$genres_obj->limit(10)->get();
+
+
+?>
 <header id="header" class="header  ">
   <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center ">
 
       <i onclick="openNav()" class="bi bi-list mobile-nav-toggle"></i>
-      <a href="./index.php" >
+      <a href="./" >
 
         <img src="../assets/img/logo.svg" width="80px" height="70px"   class="img-fluid" alt="">
       </a>
-      <a href="./index.php" class="  w-100  h-100 logo d-flex align-items-center">
+      <a href="./" class="  w-100  h-100 logo d-flex align-items-center">
           <span>BookWise</span>
         </a>
     </div>
@@ -15,25 +24,29 @@
     <nav id="navbar" class="navbar">
       <ul>
         <li><a class="nav-link  active" href="#hero">Home</a></li>
-        <li class=" dropdown"><a href="#" class="nav-link text-decoration-none"><span>Genres</span> <i
+        <li class=" dropdown"><a  href="genres.php" class="nav-link text-decoration-none"><span>Genres</span> <i
               class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a class="nav-link " href="#">Drop Down 1</a></li>
-            <!-- <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li> -->
+              <ul class="genres-dropdown">
+                  <?php 
+                  $primary_colors = array('red', 'blue', 'green', 'yellow', 'orange', 'purple', 'cyan');
+                  $num_primary_colors = count($primary_colors);
+                  
+                  foreach ($genres_result as $key => $value) {
+                    $encrypted_genre_id = base64_encode($value['genre_id']);
+                    $color = $primary_colors[$key % $num_primary_colors];                  
+                  
+                    echo'
+  
+                    <li class="p-0">
+                       <a class="genre-link" style="color: '.$color.'" href="genres.php?genre[]='.$encrypted_genre_id.'">'.$value['genre_name'].'</a>
+                    </li>
+                    ';
+                  }
 
-            <li><a class="nav-link " href="#">Drop Down 2</a></li>
-            <!-- <hr> -->
-            <li><a class="nav-link " href="#">Drop Down 3</a></li>
-            <li><a class="nav-link " href="#">Drop Down 4</a></li>
-          </ul>
+                  ?>
+                  <li class="p-0"><a class=" " href="genres.php">Other</a></li>
+
+             </ul>
         </li>
 
         <li><a class="nav-link " href="#about">Authors</a></li>

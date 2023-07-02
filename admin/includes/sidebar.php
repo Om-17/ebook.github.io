@@ -11,9 +11,9 @@
 
 
   <li class="nav-item">
-    <a class="nav-link collapsed" id="book" href="./book.php">
+    <a class="nav-link collapsed" id="books" href="./book.php">
       <i class="bi bi-book"></i>
-      <span>Book</span>
+      <span>Books</span>
     </a>
   </li>
 
@@ -25,7 +25,7 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link collapsed" id="publishers" href="#">
+    <a class="nav-link collapsed" id="publishers" href="./publisher.php">
       <i class="bi bi-globe2"></i>
       <span>Publishers</span>
     </a>
@@ -38,6 +38,14 @@
     </a>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link collapsed" id="trendbook" href="#">
+
+      <i class="bi bi-journal-text"></i>
+
+      <span>Trending Books</span>
+    </a>
+  </li>
   <li class="nav-item">
     <a class="nav-link collapsed" id="users" href="#">
 

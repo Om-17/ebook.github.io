@@ -1,10 +1,11 @@
  <!-- Vendor JS Files -->
  <script src="./assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="./assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="./assets/vendor/jquery/jquery-3.6.4.min.js" type="text/javascript"></script>
-<script src="./assets/vendor/jquery/jquery.multi-select.min.js" type="text/javascript"></script>
+  <script src="./assets/vendor/jquery/jquery-3.6.4.min.js" type="text/javascript"></script>
+  <script src="./assets/vendor/jquery/jquery.multi-select.min.js" type="text/javascript"></script>
   <script src="./assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="./assets/vendor/toast/toastr.min.js"></script>
+<script src="./assets/vendor/bootstrap/js/bootstrap-datepicker.js"></script>
   <script src="./assets/js/main.js"></script>
   <script src="./assets/js/script.js"></script>
 

@@ -1,10 +1,10 @@
+
 <?php
 include_once('./includes/header.php');
-include_once('../classes/genresclass.php');
 
 
-$genres = new Genres();
-$result = $genres->getAll();
+$allpublisher = new MasterClass('publishers');
+$result = $allpublisher->getAll();
 
 $request_method = $_SERVER["REQUEST_METHOD"];
 
@@ -17,7 +17,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Genres - bookwise</title>
+  <title>Authors - bookwise</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -36,18 +36,18 @@ $request_method = $_SERVER["REQUEST_METHOD"];
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Genres</h1>
+      <h1>Publishers</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="./index.php">Home</a></li>
-          <li class="breadcrumb-item active">Genres</li>
+          <li class="breadcrumb-item active">Publishers</li> 
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
     <section class="section ">
       <button class="btn  rounded-circle add-btn" data-bs-toggle="modal" title="Add Genres"
-        data-bs-target="#addmodal"><i class="bi bi-plus fs-3"></i></button>
+        data-bs-target="#addmodal"><i class="bi bi-plus  fs-3"></i></button>
       <div class="row  mt-3">
         <div class="col-12">
           <div class="card recent-sales overflow-auto">
@@ -60,10 +60,10 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
                 <table class="table table-hover  datatable">
                   <thead>
-                    <tr>
+                    <tr >
 
                       <th scope="col">SR.NO.</th>
-                      <th scope="col">Genres Name</th>
+                      <th scope="col">Publishers Name</th>
                       <th scope="col">Action</th>
 
                     </tr>
@@ -75,65 +75,64 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                       echo "
                      <tr>
                         
-                        <td>" . $key + 1 . "</td>
-                        <td>" . $value['genre_name'] . "</td>
+                        <td>" . $key +1 . "</td>
+                        <td>" . $value['publisher_name'] . "</td> 
                         <td>
                       <div class='d-flex'>
                         <button class='btn btn-warning text-white edit-btn  p-0'  data-bs-toggle='modal' 
                         data-bs-target='#updatemodal{$key}'><i class='px-2 fs-5 ri-edit-2-line'></i></button>
                         <button class='btn  btn-danger p-0 delete-btn p-0' data-bs-toggle='modal' data-bs-target='#deletemodal{$key}'><i class='px-2 fs-5 bi bi-trash'></i></button>
-                     
-                      
+                       
                         </div>
                         </td>
                      </tr>
               
                     ";
-                    // delete model 
+                       // delete model 
                     
-                      echo '
-                      <div class="modal fade" id="deletemodal' . $key . '" tabindex="-1" aria-labelledby="addgenresModal" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered modal-confirm">
-                          <div class="modal-content">
-                                    <div class="modal-header flex-column">
-                                      <div class="icon-box">
-                                      <i class="bi bi-x"></i>
-                                      </div>						
-                                      <h4 class="modal-title w-100">Are you sure?</h4>	
-                                       <button type="button" class="btn-close close fs-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                       echo '
+                       <div class="modal fade" id="deletemodal' . $key . '" tabindex="-1" aria-labelledby="addgenresModal" aria-hidden="true">
+                           <div class="modal-dialog modal-dialog-centered modal-confirm">
+                           <div class="modal-content">
+                                     <div class="modal-header flex-column">
+                                       <div class="icon-box">
+                                       <i class="bi bi-x"></i>
+                                       </div>						
+                                       <h4 class="modal-title w-100">Are you sure?</h4>	
+                                        <button type="button" class="btn-close close fs-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                                           
+                                               </div>
+                                     <div class="modal-body">
+                                       <p>Do you really want to delete these records? This process cannot be undone.</p>
+                                     </div>
+                                     <div class="modal-footer justify-content-center">
+                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                           <form method="post" class="d-flex mb-0" action="./publisher.php">
+                                           <input type="number" name="delete_id" value=' . $value["publisher_id"] . ' hidden>
                                           
-                                              </div>
-                                    <div class="modal-body">
-                                      <p>Do you really want to delete these records? This process cannot be undone.</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-center">
-                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                          <form method="post" class="d-flex mb-0" action="./genres.php">
-                                          <input type="number" name="delete_id" value=' . $value["genre_id"] . ' hidden>
-                                         
-                                          <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
-                                    </div>
-                                  </div>
-                          </div>
-                      </div>';
-                    // update model  
+                                           <button type="submit" class="btn btn-danger">Delete</button>
+                                     </form>
+                                     </div>
+                                   </div>
+                           </div>
+                       </div>';
+                     // update model  
                       echo "
                             <div class=\"modal fade\" id=\"updatemodal{$key}\" tabindex=\"-1\" aria-labelledby=\"addgenresModal\" aria-hidden=\"true\">
                                 <div class=\"modal-dialog modal-dialog-centered\">
                                     <div class=\"modal-content\">
                                         <div class=\"modal-header\">
-                                            <h1 class=\"modal-title fs-5\">Update Genres</h1>
+                                            <h1 class=\"modal-title fs-5\">Add Publisher</h1>
                                             <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>
                                         </div>
-                                        <form method=\"POST\" action=\"./genres.php\" id=\"genreform\" class=\"needs-validation\" novalidate>
+                                        <form method=\"POST\" action=\"./publisher.php\" id=\"publisherform\" class=\"needs-validation\" novalidate>
                                             <div class=\"modal-body\">
-                                               <input type=\"number\" name=\"id\" value=\"{$value['genre_id']}\" hidden >
+                                               <input type=\"number\" name=\"id\" value=\"{$value['publisher_id']}\" hidden >
                                                 <div class=\"form-floating mb-3\">
-                                                    <input type=\"text\" class=\"form-control\" name=\"genre_name\" value=\"{$value['genre_name']}\"  id=\"genre_name\" placeholder=\"Genres name\" required>
-                                                    <label for=\"genre_name\">Genres Name</label>
+                                                    <input type=\"text\" class=\"form-control\" name=\"publisher_name\" value=\"{$value['publisher_name']}\"  id=\"publisher_name\" placeholder=\"Publisher name\" required>
+                                                    <label for=\"publisher_name\">Publisher Name</label>
                                                     <div class=\"invalid-feedback\">
-                                                        Genres name is required
+                                                        Publisher name is required
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,7 +145,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                 </div>
                             </div>";
 
-
+                   
                     }
 
                     ?>
@@ -159,21 +158,21 @@ $request_method = $_SERVER["REQUEST_METHOD"];
             </div>
           </div>
           <!-- add modal  -->
-          <div class="modal  fade  " id="addmodal" tabindex="-1" aria-labelledby="addgenresModal" aria-hidden="true">
+          <div class="modal  fade" id="addmodal" tabindex="-1" aria-labelledby="addgenresModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="addgenresModal">Add Genres</h1>
+                  <h1 class="modal-title fs-5" id="addgenresModal">Add publisher</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post" action="./genres.php" id="genreform" class="needs-validation" novalidate>
+                <form method="post" action="./publisher.php" class="needs-validation" novalidate>
                   <div class="modal-body">
                     <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="genre_name" id="genre_name"
-                        placeholder="Genres name" required>
-                      <label for="genre_name">Genres Name</label>
+                      <input type="text" class="form-control" name="publisher_name" id="publisher_name"
+                        placeholder="Publisher name" required>
+                      <label for="publisher_name">Publisher Name</label>
                       <div class="invalid-feedback">
-                        Genres name is required
+                        Publisher name is required
                       </div>
                     </div>
                   </div>
@@ -197,27 +196,28 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
   <?php include_once('./config/js.config.php') ?>
   <script>
-    $('#genres').removeClass('collapsed') 
+   $('#publisher').removeClass('collapsed') 
   </script>
   <?php
 
 
   if ($request_method == 'POST') {
-    $master = new MasterClass('genres');
-    if (isset($_POST['genre_name'])) {
-
-      $genre_name = $_POST['genre_name'];
-      $genres = new Genres();
+    $publisher= new MasterClass('publishers');
+    if (isset($_POST['publisher_name'])) {
+      
+      $publisher_name = $_POST['publisher_name'];
+     
       // update record 
-      if (isset($_REQUEST['id'])) {
+      if(isset($_REQUEST['id'])){
 
-        $id = $_REQUEST['id'];
+        $id= $_REQUEST['id'];
 
-        $param = array(
-          'genre_name' => $genre_name
-        );
-        $message = $master->update('genre_id', $id, $param);
-        if ($message['status']) {
+        
+        $param= array(
+          'publisher_name'=>$publisher_name
+        ); 
+        $message=$publisher->update('publisher_id',$id,$param);
+        if($message['status']){
           echo "<script>
           $(document).ready(function () {
             console.log('" . $message['message'] . "');
@@ -229,12 +229,14 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                   };
                   toastr.success('" . $message['message'] . "');
                   setTimeout(function(){
-                    window.location.href='./genres.php'
+                    window.location.href='./publisher.php'
+
                   },900)
                 })
           },2000)
           </script>";
-        } else {
+        }
+        else{
           echo "<script>
           $(document).ready(function () {
             toastr.options = {
@@ -244,22 +246,24 @@ $request_method = $_SERVER["REQUEST_METHOD"];
           };
           toastr.success('something is going wrong');
           setTimeout(function(){
+            window.location.href='./publisher.php'
             
-            window.location.href='./genres.php'
           },100)
           })
     
           </script>";
         }
-
+      
       }
-
+    
       // create record 
-      else {
-        $genres->genre_name = $genre_name;
-        $message = $genres->create();
+      else{
+        $param= array(
+            'publisher_name'=>$publisher_name
+          );
+        $message = $publisher->create($param);
         if (isset($message['message'])) {
-
+  
           echo "<script>
         $(document).ready(function () {
           console.log('" . $message['message'] . "');
@@ -270,14 +274,14 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                     positionClass: 'toast-top-right'
                 };
                 toastr.success('" . $message['message'] . "');
-                window.location.href='./genres.php'
-              
+                window.location.href='./publisher.php'
+                
               })
         },2000)
         </script>";
         }
         if (isset($message['error'])) {
-
+  
           echo "<script>
         $(document).ready(function () {
           toastr.options = {
@@ -287,23 +291,23 @@ $request_method = $_SERVER["REQUEST_METHOD"];
         };
         toastr.success('" . $message['error'] . "');
           setTimeout(function(){
+            window.location.href='./publisher.php'
             
-                window.location.href='./genres.php'
               },100)
         })
   
         </script>";
         }
-
+       
       }
-
+    
     }
     // delete 
-    if (isset($_REQUEST['delete_id'])) {
-      $id = $_REQUEST['delete_id'];
+    if(isset($_REQUEST['delete_id'])){
+      $id=$_REQUEST['delete_id'];
       // echo $id;
-      $message = $master->delete('genre_id', $id);
-      if ($message['status']) {
+     $message= $publisher->delete('publisher_id',$id);
+      if($message['status']){
         echo "<script>
         $(document).ready(function () {
           console.log('" . $message['message'] . "');
@@ -315,13 +319,14 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                 };
                 toastr.success('" . $message['message'] . "');
                 setTimeout(function(){
-                window.location.href='./genres.php'
+                    window.location.href='./publisher.php'
 
                 },900)
               })
         },2000)
         </script>";
-      } else {
+      }
+      else{
         echo "<script>
         $(document).ready(function () {
           toastr.options = {
@@ -329,9 +334,9 @@ $request_method = $_SERVER["REQUEST_METHOD"];
             timeOut: 5000,
             positionClass: 'toast-top-right'
           };
-        toastr.success('something is going wrong');
+        toastr.success('something is going wrong" . $message['error'] . "');
         setTimeout(function(){
-          window.location.href='./genres.php'
+            window.location.href='./publisher.php'
           
         },100)
         })
@@ -341,10 +346,12 @@ $request_method = $_SERVER["REQUEST_METHOD"];
     }
     exit();
   }
-  $master = null;
+//   $author = null;
 
-  $genres = null;
   ?>
+   <script>
+    $('#publishers').removeClass('collapsed') 
+  </script>
 </body>
 
-</html>
+</html> 

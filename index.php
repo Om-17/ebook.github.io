@@ -1,5 +1,5 @@
 <?php 
 require_once('./config.php');
-redirect('app');
+redirect('/app');
 
 ?>

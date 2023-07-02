@@ -81,15 +81,42 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                       <div class='d-flex'>
                         <button class='btn btn-warning text-white edit-btn  p-0'  data-bs-toggle='modal' 
                         data-bs-target='#updatemodal{$key}'><i class='px-2 fs-5 ri-edit-2-line'></i></button>
-                        <form  method='post' class='d-flex mb-0' action='./author.php'>
-                        <input type='number' name='delete_id' value='{$value['author_id']}' hidden >
-                        <button class='btn btn-danger p-0 delete-btn ' type='submit'><i class='px-2 fs-5 bi bi-trash'></i></button>
-                        </form>
+                        <button class='btn  btn-danger p-0 delete-btn p-0' data-bs-toggle='modal' data-bs-target='#deletemodal{$key}'><i class='px-2 fs-5 bi bi-trash'></i></button>
+                       
                         </div>
                         </td>
                      </tr>
               
                     ";
+                       // delete model 
+                    
+                       echo '
+                       <div class="modal fade" id="deletemodal' . $key . '" tabindex="-1" aria-labelledby="addgenresModal" aria-hidden="true">
+                           <div class="modal-dialog modal-dialog-centered modal-confirm">
+                           <div class="modal-content">
+                                     <div class="modal-header flex-column">
+                                       <div class="icon-box">
+                                       <i class="bi bi-x"></i>
+                                       </div>						
+                                       <h4 class="modal-title w-100">Are you sure?</h4>	
+                                        <button type="button" class="btn-close close fs-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                                           
+                                               </div>
+                                     <div class="modal-body">
+                                       <p>Do you really want to delete these records? This process cannot be undone.</p>
+                                     </div>
+                                     <div class="modal-footer justify-content-center">
+                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                           <form method="post" class="d-flex mb-0" action="./author.php">
+                                           <input type="number" name="delete_id" value=' . $value["author_id"] . ' hidden>
+                                          
+                                           <button type="submit" class="btn btn-danger">Delete</button>
+                                     </form>
+                                     </div>
+                                   </div>
+                           </div>
+                       </div>';
+                     // update model  
                       echo "
                             <div class=\"modal fade\" id=\"updatemodal{$key}\" tabindex=\"-1\" aria-labelledby=\"addgenresModal\" aria-hidden=\"true\">
                                 <div class=\"modal-dialog modal-dialog-centered\">
