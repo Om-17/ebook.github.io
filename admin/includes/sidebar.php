@@ -39,14 +39,6 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link collapsed" id="trendbook" href="#">
-
-      <i class="bi bi-journal-text"></i>
-
-      <span>Trending Books</span>
-    </a>
-  </li>
-  <li class="nav-item">
     <a class="nav-link collapsed" id="users" href="#">
 
       <i class="bi bi-person"></i>

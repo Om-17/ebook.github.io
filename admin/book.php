@@ -103,7 +103,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                             </tr>
                                             
                                             ";
-                                            
+
                                             //    delete model 
                                             echo '
                                             <div class="modal fade" id="deletemodal' . $key . '" tabindex="-1" aria-labelledby="addgenresModal" aria-hidden="true">
@@ -133,7 +133,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                             </div>';
 
                                             // update model 
-
+                                        
                                             echo '
                                             <div class="modal fade" id="updatemodal' . $key . '" tabindex="-1" aria-labelledby="addgenresModal" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg modal-dialog-top">
@@ -149,7 +149,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                                 <div class="row w-100 m-0">
                                                                     <div class="col-4 col-sm-12 col-xs-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4 col-xxxl-4">
                                                                         <div class="did-floating-label-content">
-                                                                            <input class="did-floating-input form-control" type="text" name="book_title" value="'.$value["book_title"].'"  required placeholder=" ">
+                                                                            <input class="did-floating-input form-control" type="text" name="book_title" value="' . $value["book_title"] . '"  required placeholder=" ">
                                                                             <label class="did-floating-label">Book Title</label>
                                                                             <div class="invalid-feedback">
                                                                                 Book Title is required
@@ -161,12 +161,12 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                             
                                                                         <div class="multiSelect">
                                                                             <select multiple class="multiSelect_field" name="genres[]"  data-placeholder="Add Genres" required>';
-    
+
                                             // Print genres options
                                             foreach ($genres_result as $key => $value) {
                                                 echo "<option value='{$value['genre_id']}'>{$value['genre_name']}</option>";
                                             }
-    
+
                                             echo '
                                                                             </select>
                                                                         </div>
@@ -184,18 +184,18 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                                     <script type="text/javascript">
                                                                     $(document).ready(()=>{
                                                                        
-                                                                        $("#author_id'.$key.'").val("'.$get_author["author_id"].'");
+                                                                        $("#author_id' . $key . '").val("' . $get_author["author_id"] . '");
                                                                     })
                                                                     
                                                                     </script>
                                                                         <div class="did-floating-label-content">
-                                                                            <select class="did-floating-select" onclick="this.setAttribute(\'value\', this.value);" name="author_id" onchange="this.setAttribute(\'value\', this.value);"  id="author_id'.$key.'" required>';
-    
+                                                                            <select class="did-floating-select" onclick="this.setAttribute(\'value\', this.value);" name="author_id" onchange="this.setAttribute(\'value\', this.value);"  id="author_id' . $key . '" required>';
+
                                             // Print author options
                                             foreach ($author_result as $key => $value) {
                                                 echo "<option value='{$value['author_id']}'>{$value['author_name']}</option>";
                                             }
-    
+
                                             echo '
                                                                             </select>
                                                                             <label class="did-floating-label">Select Author</label>
@@ -206,12 +206,12 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                             
                                                                         <div class="did-floating-label-content">
                                                                             <select class="did-floating-select" name="publisher_id" onclick="this.setAttribute(\'value\', this.value);" onchange="this.setAttribute(\'value\', this.value);" value="" required>';
-    
+
                                             // Print publisher options
                                             foreach ($publishers_result as $key => $value) {
                                                 echo "<option value='{$value['publisher_id']}'>{$value['publisher_name']}</option>";
                                             }
-    
+
                                             echo '
                                                                             </select>
                                                                             <label class="did-floating-label">Select Publisher</label>
@@ -328,11 +328,11 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                 </div>
                                               
                                                 </div>';
-                                                
-                                                
+
+
                                         }
 
-                                     
+
 
                                         ?>
 
@@ -492,8 +492,8 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                 class=" col-4 col-sm-12 col-xs-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4 col-xxxl-4 ">
 
                                                 <div class="did-floating-label-content">
-                                                    <input class="did-floating-input form-control" id="yearpicker" type="number"
-                                                        name="publish_year" placeholder=" ">
+                                                    <input class="did-floating-input form-control" id="yearpicker"
+                                                        type="number" name="publish_year" placeholder=" ">
                                                     <label class="did-floating-label">Publish Year</label>
 
                                                 </div>
@@ -538,16 +538,20 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                             </div>
                                             <div
                                                 class=" col-4 col-sm-12 col-xs-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4 col-xxxl-4 ">
-
-                                                <div class="did-floating-label-content">
-
-                                                    <div class="form-floating">
-                                                        <textarea class="form-control did-floating-input"
-                                                            id="floatingTextarea2" name="book_summary"
-                                                            style="height: 100px"></textarea>
-                                                        <label for="floatingTextarea2">Book Summary</label>
-                                                    </div>
+                                                <label class="form-check-label" for="flexSwitchCheckChecked">Trending Book</label>
+                                                <div class="form-check form-switch mt-1">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="flexSwitchCheckChecked" value="1" name="trending_book">
                                                 </div>
+                                            </div>
+                                            <div
+                                                class=" col-12 col-sm-12 col-xs-12 col-md-6 col-lg-12 col-xl-12 col-xxl-12 col-xxxl-12 ">
+
+
+                                                <label for="floatingTextarea2">Book Summary</label>
+                                                <textarea class="form-control did-floating-input" id="floatingTextarea2"
+                                                    name="book_summary" style="height: 100px"></textarea>
+
 
                                             </div>
 
@@ -571,13 +575,13 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
-            <script>
-    $('#books').removeClass('collapsed') 
-  </script>
+    <script>
+        $('#books').removeClass('collapsed') 
+    </script>
 
     <?php
     if (isset($_SESSION['message'])) {
-     
+
         echo "<script>
     $(document).ready(function () {
         toastr.options = {
@@ -591,7 +595,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
         unset($_SESSION['message']);
     }
     if (isset($_SESSION['error'])) {
-       
+
         echo "<script>
     $(document).ready(function () {
         toastr.options = {
@@ -602,7 +606,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
     toastr.error('" . $_SESSION['error'] . "');
 });
 </script>";
-unset($_SESSION['error']);
+        unset($_SESSION['error']);
     }
     ?>
 

@@ -69,7 +69,7 @@ class MasterClass extends DBconnection
       $last_id=$this->conn->lastInsertId();
 
       $context = array(
-        "message" => "Record created successfully.",
+        "message" => "Successfully Created.",
         "status" => 1,
         "last_id" => $last_id,
       );
@@ -102,7 +102,7 @@ class MasterClass extends DBconnection
       $i++;
     }
     $sql .= " WHERE $field = :fieldvalue";
-    echo $sql;
+    // echo $sql;
 
     try {
       $stmt = $this->conn->prepare($sql);

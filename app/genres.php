@@ -13,9 +13,9 @@
 <body>
 
     <?php include_once('../includes/header.php');
-    if (isset($_GET['genre'])) {
+    if (isset($_REQUEST['genre'])) {
 
-        $encrypted_genre_id = $_GET['genre'];
+        $encrypted_genre_id = $_REQUEST['genre'];
         $genre_id = array();
         
         foreach ($encrypted_genre_id as $key => $value) {
@@ -44,17 +44,60 @@
                 if (!in_array($book_id, $uniqueBookIds)) {
                     $uniqueBookIds[] = $book_id;
                     $uniqueGenres[] = $value;
-                    $book_result[] = $book_obj->get('book_id', $book_id);
+                    if(isset($_REQUEST['language'])){
+                        $book_language=$_REQUEST['language'];
+                        if($_REQUEST['language'] =='all'){
+
+                            $book_result[] = $book_obj->get('book_id', $book_id);
+                        }
+                        elseif($_REQUEST['language'] =='hindi'){
+                            $book_result[] = $book_obj->filter(['book_id'=>$book_id,'book_language'=>$book_language]);
+
+                        }
+                        else{
+                         
+                            $book_result[] = $book_obj->filter(['book_id'=>$book_id,'book_language'=>$book_language]);
+
+                        }
+
+                    }
+                    else{
+
+                        $book_result[] = $book_obj->get('book_id', $book_id);
+                        
+                    }
                 }
             }
         }
-        // end
+               // end
         // print_r($book_result);
         // all genres    
       
     } else {
         $book_obj = new MasterClass('books');
-        $book_result=$book_obj->getAll();
+        if(isset($_REQUEST['language'])){
+            $book_language=$_REQUEST['language'];
+            if(isset($_REQUEST['language'])){
+                if($_REQUEST['language']=='all'){
+
+                    $book_result = $book_obj->getAll();
+                }
+                else{
+                 
+                    $book_result = $book_obj->filter(['book_language'=>$book_language]);
+                    if(isset($book_result['message'])){
+                        $book_result=[];
+                    }
+                }
+
+            }
+           
+
+        }
+        else{
+
+            $book_result=$book_obj->getAll();
+        }
         // redirect('./app/home.php');
     }
 
@@ -78,6 +121,7 @@
                                     <option selected value="all">Any</option>
                                     <option value="english">English</option>
                                     <option value="hindi">Hindi</option>
+                                    <option value="gujarati">Gujarati</option>
 
                                 </select>
                             </div>
@@ -159,12 +203,16 @@
                         <div class="row">
                             <?php
                             foreach ($book_result as $key => $value) {
+                                
                                 $authorobj=new  MasterClass('authors');
                                 $authorname=$authorobj->get("author_id",$value['author_id']);
                                 echo '
                                 <div class="col-4">
                                     <a class="text-decoration-none" href="./book_details.php?book_id='.$value['book_id'].'">
-                                    <div class="book-card w-100">
+                                    <div class="book-card position-relative w-100">
+                                        <div class=" badge position-absolute  bg-danger">
+                                        <span>'.$value['book_type'].'</span>
+                                        </div>
                                         <div class="book-card__cover">
                                             <div class="book-card__book">
                                                 <div class="book-card__book-front">

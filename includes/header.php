@@ -17,7 +17,7 @@ $genres_result=$genres_obj->limit(10)->get();
         <img src="../assets/img/logo.svg" width="80px" height="70px"   class="img-fluid" alt="">
       </a>
       <a href="./" class="  w-100  h-100 logo d-flex align-items-center">
-          <span>BookWise</span>
+          <span>&nbsp;BookWise</span>
         </a>
     </div>
 
@@ -82,17 +82,24 @@ $genres_result=$genres_obj->limit(10)->get();
       if (isset($_SESSION['user'])) {
           echo ' 
           <div class="flex-shrink-0 dropdown">
-          <a href="#" class="profile d-flex align-items-center link-dark text-decoration-none fs-5 dropdown-toggle"
+          <a href="#" class="profile d-flex align-items-center link-dark text-decoration-none fs-5 "
             data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-circle-user fs-2"></i>&nbsp;&nbsp;'.$_SESSION['user']['username'].'
+            <i class="fa-solid fa-circle-user fs-2"></i>&nbsp;&nbsp;
             </a>
-          <ul class="dropdown-menu text-small shadow">
+          <ul style="width:250px" class="dropdown-menu text-small shadow">
             
+            <li>
+            <h5 class="dropdown-item text-capitalize text-center mb-0" href="#">'.$_SESSION['user']['username'].'
+            </h5>
+            <h6 class="text-center mb-1"> '.$_SESSION['user']['email'].'</h6>
+            
+            </li>
+            <li>
+            <hr class="dropdown-divider">
+          </li>
             <li><a class="dropdown-item" href="#">Mybook</a></li>
             <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+           
             <li><a class="dropdown-item" href="./logout.php">Log out</a></li>
           </ul>
         </div>

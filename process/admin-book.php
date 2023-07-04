@@ -25,7 +25,13 @@ if(isset($_POST['book_title'])){
     $book_type = $_POST['book_type'];
     $book_image = NAN;
     $book_pdf = NAN;
-    
+    if (isset($_POST['trending_book'])) {
+        $trending_book= $_POST['trending_book'];
+      
+    } else {
+        $trending_book = 0;
+    }
+    // echo $trending_book;
     
     $extist = $book_obj->exists("book_title", $book_title);
     print_r($genres);
@@ -110,7 +116,8 @@ if(isset($_POST['book_title'])){
             "publisher_id" => $publisher_id,
             "publish_year" => $publish_year,
             "book_image" => $book_image,
-            "book_pdf" => $book_pdf
+            "book_pdf" => $book_pdf,
+            "trending_book"=>$trending_book,
         ];
         $result = $book_obj->create($params);
         // print_r($result);
@@ -147,7 +154,7 @@ if(isset($_POST['book_title'])){
     }
     
 }
-//end create book
+// //end create book
 
 // delete book 
 if(isset($_POST['delete_id'])){

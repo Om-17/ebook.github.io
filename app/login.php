@@ -37,7 +37,7 @@ if (isset($_SESSION['User']))
                         <?php 
                         
                         echo'   
-                        <img src="'.base_url.'assets/img/login-icon.svg" alt="login"
+                        <img src="'.base_url.'/assets/img/login-icon.svg" alt="login"
                                 class="col-sm-8 col-xl-11 col-lg-11 col-md-12 login-card-img   img-fluid">'
 
                                 ?>
