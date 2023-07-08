@@ -1,15 +1,4 @@
-<?php
-include_once('./includes/header.php');
-include_once('../classes/genresclass.php');
 
-
-$genres = new Genres();
-$result = $genres->getAll();
-
-$request_method = $_SERVER["REQUEST_METHOD"];
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,6 +12,18 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
 
   <?php include_once('./config/css.config.php') ?>
+  <?php
+include_once('./includes/header.php');
+include_once('../classes/genresclass.php');
+
+
+$genres = new Genres();
+$result = $genres->getAll();
+
+$request_method = $_SERVER["REQUEST_METHOD"];
+
+
+?>
 </head>
 
 <body>

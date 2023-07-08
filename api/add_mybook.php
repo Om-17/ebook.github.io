@@ -12,8 +12,8 @@ if(isset($REQUEST['status'])){
     $book_id=$REQUEST['book_id'];
     $status=$REQUEST['status'];
     $mybookobj = new MasterClass('mybooks');
-    $exist= $mybookobj ->exists('book_id',$book_id);
-    if($exist!=1){
+    $exist= $mybookobj ->filter(['book_id'=>$book_id,"user_id"=>$_SESSION['user']['id']]);
+    if(empty($exist)){
         $mybookparam=[
             "book_id"=>$book_id,
             "status"=>$status,

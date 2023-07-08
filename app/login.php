@@ -52,15 +52,25 @@ if (isset($_SESSION['User']))
                                 <!-- <p class="login-card-description">Sign into your account</p> -->
                                 <form id='loginform' method="post">
                                     <div class="p-2 ">
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="username" name="username"
-                                                placeholder="John17">
-                                            <label for="username">Username</label>
+                                        <div class="mb-3">
+
+
+                                            <div class="form-floating ">
+                                                <input type="text" class="form-control" id="username" name="username"
+                                                    placeholder="John17" >
+                                                <label for="username">Username</label>
+                                            </div>
+                                            <div id="username-invalid" class="invalid-feedback">
+                                               
+                                            </div>
                                         </div>
                                         <div class="form-floating">
                                             <input type="password" class="form-control" name="password" id="password"
-                                                placeholder="Password">
+                                                placeholder="Password" >
                                             <label for="password">Password</label>
+                                        </div>
+                                        <div id="password-invalid" class="invalid-feedback" >
+                                            
                                         </div>
                                         <div class="d-flex mt-3 mb-2">
 
@@ -92,12 +102,41 @@ if (isset($_SESSION['User']))
     <script>
         $(document).ready(function () {
             var loader = $('.loader')
+            $('#password').keypress(function(){
+              
+                    $('#password').removeClass('is-invalid')
+                   
+                    $('#password-invalid').removeClass("d-block")
+            });
+            $('#username').keypress(function(){
+              
+                $('#username').removeClass('is-invalid')
+                  
+                  $('#username-invalid').removeClass("d-block")
+
+            });
+           
             $('#loginform').submit(function (e) {
                 e.preventDefault();
                 var form = $(this);
                 var username = $('#username').val();
                 var password = $('#password').val();
 
+                if ( password === '') {
+                   
+                    $('#password').addClass('is-invalid')
+                    $('#password-invalid').text('Password is Required.')
+                    $('#password-invalid').addClass("d-block")
+
+                    return ;
+                 }
+                if (username === '') {
+                    $('#username').addClass('is-invalid')
+                    $('#username-invalid').text('Username is Required.')
+                    $('#username-invalid').addClass("d-block")
+                    return ;
+                 }
+                
                 console.log(username, password);
                 var actionUrl = 'http://localhost:80/ebook/api/api-login.php'
                 $.ajax({
@@ -114,7 +153,7 @@ if (isset($_SESSION['User']))
                     }),
                     beforeSend: function() {
                 loader.show();
-            },
+                    }   ,
                     // data:form.serialize(),
                     // serializes the form's elements.
                     success: function (data) {
@@ -157,9 +196,9 @@ if (isset($_SESSION['User']))
                             loader.hide();
                             
                         }, 1000);
-            }
+                    }
                 });
-                return false;
+               
 
             })
 

@@ -1,4 +1,18 @@
-<?php
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Book - bookwise</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+
+    <?php include_once('./config/css.config.php') ?>
+    <?php
 include_once('./includes/header.php');
 
 
@@ -15,19 +29,6 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    <title>Book - bookwise</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-
-
-    <?php include_once('./config/css.config.php') ?>
 </head>
 
 <body>
@@ -356,13 +357,13 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                 </div>
                                 <div class="modal-body d-flex ">
                                     <form method="post" action="../process/admin-book.php" enctype="multipart/form-data"
-                                        class="form needs-validation w-100 m-0" novalidate>
+                                        class="form needs-validation w-100 m-0"  id="bookform">
                                         <div class="row w-100 m-0">
                                             <div
                                                 class=" col-4 col-sm-12 col-xs-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4 col-xxxl-4">
                                                 <div class="did-floating-label-content">
-                                                    <input class="did-floating-input form-control" type="text"
-                                                        name="book_title" required placeholder=" ">
+                                                    <input class="did-floating-input form-control"  type="text"
+                                                        name="book_title" required placeholder=" " >
                                                     <label class="did-floating-label">Book Title</label>
                                                     <div class="invalid-feedback">
                                                         Book Title is required
@@ -377,7 +378,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                 <div class="multiSelect">
                                                     <select multiple class="multiSelect_field" name="genres[]"
                                                         data-placeholder="Add Genres" required>
-
+                                                        <option disabled value='' selected></option>
                                                         <?php
                                                         // print_r($genres_result);
                                                         foreach ($genres_result as $key => $value) {
@@ -407,6 +408,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                         name="author_id"
                                                         onchange="this.setAttribute('value', this.value);" value=""
                                                         required>
+                                                        <option disabled value='' selected></option>
 
                                                         <?php
                                                         // print_r($genres_result);
@@ -426,6 +428,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                         onclick="this.setAttribute('value', this.value);"
                                                         onchange="this.setAttribute('value', this.value);" value=""
                                                         required>
+                                                        <option disabled value='' selected></option>
 
                                                         <?php
                                                         // print_r($genres_result);
@@ -446,6 +449,8 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                         onclick="this.setAttribute('value', this.value);"
                                                         onchange="this.setAttribute('value', this.value);" value=""
                                                         required>
+                                                        <option disabled value='' selected></option>
+
                                                         <option value="english">English</option>
                                                         <option value="hindi">Hindi</option>
                                                         <option value="gujarat">Gujarati</option>
@@ -476,6 +481,8 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                         onclick="this.setAttribute('value', this.value);"
                                                         onchange="this.setAttribute('value', this.value);" value=""
                                                         required>
+                                                        <option disabled value='' selected></option>
+
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -507,6 +514,8 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                         onclick="this.setAttribute('value', this.value);"
                                                         onchange="this.setAttribute('value', this.value);" value=""
                                                         required>
+                                                        <option disabled value='' selected></option>
+
                                                         <option value="Free">Free</option>
                                                         <option value="Premiere">Premiere</option>
 
@@ -523,7 +532,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                                     <label for="book_image" class="form-label p-0 mb-1 "
                                                         style="font-size:16px">Book Image</label>
                                                     <input class="form-control form-control-sm" name="book_image"
-                                                        id="book_image" type="file">
+                                                        id="book_image" accept=".jpg .png .jpeg "type="file">
                                                 </div>
                                             </div>
                                             <div

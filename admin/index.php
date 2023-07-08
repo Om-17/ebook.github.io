@@ -1,4 +1,20 @@
-<?php include_once('./includes/header.php');
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - bookwise</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <?php include_once('./config/css.config.php') ?>
+  <?php include_once('../loader.php') ?>
+
+  <?php include_once('./includes/header.php');
 
 $user = new MasterClass('users');
 $today = date('Y-m-d');
@@ -15,22 +31,6 @@ $totalgenres = $genres->count([]);
 $book = new MasterClass('books');
 $totalbooks = $book->count([]);
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Dashboard - bookwise</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <?php include_once('./config/css.config.php') ?>
-  <?php include_once('../loader.php') ?>
-
-
 </head>
 
 <body>

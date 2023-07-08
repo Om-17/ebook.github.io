@@ -26,15 +26,17 @@ function check_admin(){
     
 if (isset($_SESSION['user'])) {
     if ($_SESSION['user']['is_admin'] != 1) {
+      redirect('/app/login.php');
   
-      header('Location: ../app/login.php');
+      // header('Location: ../app/login.php');
   
       exit();
     }
   }
   if (!isset($_SESSION['user'])) {
   
-    header('Location: ../app/login.php');
+    // header('Location: ../app/login.php');
+    redirect('/app/login.php');
   
     exit();
   
@@ -44,8 +46,7 @@ if (isset($_SESSION['user'])) {
 function check_user(){
     if (!isset($_SESSION['user'])) {
   
-        header('Location: ./login.php');
-      
+        redirect('/app/login.php');
         exit();
       
       }

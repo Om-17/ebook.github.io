@@ -1,15 +1,4 @@
 
-<?php
-include_once('./includes/header.php');
-
-
-$allpublisher = new MasterClass('publishers');
-$result = $allpublisher->getAll();
-
-$request_method = $_SERVER["REQUEST_METHOD"];
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +16,15 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
 <body>
 
+
   <?php
+include_once('./includes/header.php');
+
+
+$allpublisher = new MasterClass('publishers');
+$result = $allpublisher->getAll();
+
+$request_method = $_SERVER["REQUEST_METHOD"];
 
   include_once('./includes/sidebar.php');
   include_once('../loader.php');

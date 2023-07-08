@@ -23,7 +23,9 @@ $genres_result=$genres_obj->limit(10)->get();
 
     <nav id="navbar" class="navbar">
       <ul>
-        <li><a class="nav-link  active" href="#hero">Home</a></li>
+        <li><a class="nav-link  active" href="./">Home</a></li>
+        <li><a class="nav-link " href="#books">Books</a></li>
+
         <li class=" dropdown"><a  href="genres.php" class="nav-link text-decoration-none"><span>Genres</span> <i
               class="bi bi-chevron-down"></i></a>
               <ul class="genres-dropdown">
@@ -49,8 +51,7 @@ $genres_result=$genres_obj->limit(10)->get();
              </ul>
         </li>
 
-        <li><a class="nav-link " href="#about">Authors</a></li>
-        <li><a class="nav-link " href="#services">Trending</a></li>
+        <li><a class="nav-link " href="./authors.php">Authors</a></li>
         <li><a class="nav-link " href="#contact">Contact us</a></li>
         <!-- <li class=" dropdown "><a href="#" class="nav-link text-decoration-none h-100 w-100 "><i class=" fas fs-3 fa-user"></i></a>
             <ul>
@@ -97,7 +98,7 @@ $genres_result=$genres_obj->limit(10)->get();
             <li>
             <hr class="dropdown-divider">
           </li>
-            <li><a class="dropdown-item" href="#">Mybook</a></li>
+            <li><a class="dropdown-item" href="./mybooks.php">Mybooks</a></li>
             <li><a class="dropdown-item" href="#">Profile</a></li>
            
             <li><a class="dropdown-item" href="./logout.php">Log out</a></li>

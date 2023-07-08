@@ -23,7 +23,7 @@
         $genresbookObj = new MasterClass('book_genres');
         $genresbookResult = $genresbookObj->filter(['book_id' => $book_id]);
         $mybookobj = new MasterClass('mybooks');
-        $exist= $mybookobj ->exists('book_id',$book_id);
+        $exist = $mybookobj->exists('book_id', $book_id);
         $publisher_get = $publisherObj->get('publisher_id', $bookResut['publisher_id']);
     } else {
         redirect('./app/home.php');
@@ -34,10 +34,113 @@
     <?php include_once('../loader.php') ?>
     <?php include_once('../config/js.config.php') ?>
 
+    <script type="text/javascript">
+        function backlink() {
+            if (history.length === 1) {
+                window.location = '<?php echo base_url; ?>'
+            } else {
+                history.back();
+            }
+
+        }
+        $(document).ready(function() {
+            var flipbook = $("#read").flipBook({
+                //Layout Setting
+
+                pdfUrl: '<?php echo  base_url . $bookResut['book_pdf'] ?>',
+                lightBox: true,
+                layout: 3,
+                currentPage: {
+                    vAlign: "bottom",
+                    hAlign: "left"
+                },
+                // startPage:4,
+                assets: {
+                    preloader: "assets.img/preloader.jpg",
+                    overlay: "../assets/img/overlay.png",
+                    flipMp3: "../assets/mp3/turnPage.mp3",
+                    spinner: "../assets/img/spinner.gif",
+                },
+                // BTN SETTING
+                btnShare: {
+                    enabled: false
+                },
+                btnPrint: {
+                    hideOnMobile: true
+                },
+                btnSearch: {
+                    enabled: true,
+                    title: "Search",
+                    icon: "fas fa-search",
+                    icon2: "search",
+                },
+                btnDownloadPages: {
+                    enabled: true,
+                    title: "<?php echo $bookResut['book_title'] ?> Download",
+                    icon: "fa-download",
+                    icon2: "file_download",
+                    url: "<?php echo  base_url . $bookResut['book_pdf'] ?>",
+                    name: "allPages.zip",
+                },
+
+                btnColor: '#1877F2',
+                sideBtnColor: '#1877F2',
+                sideBtnSize: 60,
+                sideBtnBackground: "rgba(0,0,0,.7)",
+                sideBtnRadius: 60,
+                btnSound: {
+                    vAlign: "top",
+                    hAlign: "left"
+                },
+                btnAutoplay: {
+                    vAlign: "top",
+                    hAlign: "left"
+                },
+                // SHARING
+                btnShare: {
+                    enabled: true,
+                    title: "Share",
+                    icon: "fa-share-alt"
+                },
+                facebook: {
+                    enabled: true,
+                    url: "<?php echo  base_url . $bookResut['book_pdf'] ?>"
+                },
+                google_plus: {
+                    enabled: false
+                },
+                email: {
+                    enabled: true,
+                    url: "<?php echo  base_url . $bookResut['book_pdf'] ?>",
+                    title: "<?php echo  $bookResut['book_title'] ?>",
+
+                },
+                twitter: {
+                    enabled: true,
+                    url: "<?php echo  base_url . $bookResut['book_pdf'] ?>"
+                },
+                pinterest: {
+                    enabled: true,
+                    url: "<?php echo  base_url . $bookResut['book_pdf'] ?>"
+                }
+            });
+
+
+
+        })
+    </script>
     <main>
         <div class="container">
-            <div class="heading-section">
+            <div class="heading-section d-flex justify-content-between align-items-center">
+
+                <a href="javascript:void(0)" class="d-flex justify-content-between align-items-center text-decoration-none " onclick="backlink();">
+                    <i class="fa-solid fa-arrow-left " style="font-size: 30px;"></i>
+                    <!-- <i class="fa-solid fa-arrow-left fa-beat" style="color: #012f7e;"></i> -->
+                    <!-- <i class="bi bi-arrow-left"></i> -->
+                </a>
+
                 <h1>Book Details</h1>
+                <span></span>
             </div>
             <?php
             // print_r($bookResut);
@@ -156,7 +259,7 @@
                                         </form>
                                   </div>
                                 </div>
-                                <button class="m-0 read-book-btn login-btn">Read Book</button>
+                                <button id="read" class="m-0 read-book-btn login-btn">Read Book</button>
                                 <button class="btn btn-outline-primary download-btn" onclick="downloadPDF()">Download</button>
 
                             </div>
@@ -193,7 +296,7 @@
             </div>
         </div>
 
-        <script>
+        <script type="text/javascript">
         function downloadPDF() {
           // Create a new invisible link element
           const link = document.createElement("a")
@@ -223,25 +326,26 @@
 
             ?>
             <script>
-                $(document).ready(function () {
+                $(document).ready(function() {
+
                     if (<?php echo $exist ? 'true' : 'false'; ?>) {
                         // Redirect to login page
                         $('#mybookicon').removeClass('fa-plus');
                         $('#mybookicon').addClass('fa-edit');
-                    }
-                    else{
+                    } else {
                         $('#mybookicon').addClass('fa-plus');
                         $('#mybookicon').removeClass('fa-edit');
                     }
 
                 });
+
                 function submitForm(formId, status) {
                     const form = $("#" + formId);
                     const actionUrl = "../api/add_mybook.php"
                     const formData = form.serialize();
                     if (!<?php echo isset($_SESSION['user']) ? 'true' : 'false'; ?>) {
                         // Redirect to login page
-                        window.location.href ='./login.php';
+                        window.location.href = './login.php';
                     }
 
                     $.ajax({
@@ -257,50 +361,49 @@
                             "status": status,
                         }),
 
-                        success: function (response) {
+                        success: function(response) {
                             toastr.options = {
-                                    closeButton: true,
-                                    timeOut: 15000,
-                                    positionClass: 'toast-bottom-right'
-                                };
-                            // Handle success response here
+                                closeButton: true,
+                                timeOut: 1500,
+                                positionClass: 'toast-bottom-right'
+                            };
+
                             if (response.last_id) {
-                               
-                                toastr.success("<?php echo "".$bookResut['book_title']." Sucessfully Added"; ?>");
-                                console.log(response.message);
-                            }
-                            else {
                                 $('#mybookicon').addClass('fa-edit');
                                 $('#mybookicon').removeClass('fa-plus');
-                                toastr.success("<?php echo ''.$bookResut['book_title'].' Sucessfully Updated'; ?>");
+                                toastr.success("<?php echo "" . $bookResut['book_title'] . " Sucessfully Added"; ?>");
+                                console.log(response.message);
+                            } else {
+                                $('#mybookicon').addClass('fa-edit');
+                                $('#mybookicon').removeClass('fa-plus');
+                                toastr.success("<?php echo '' . $bookResut['book_title'] . ' Sucessfully Updated'; ?>");
 
                             }
                         },
-                        error: function (xhr, status, error) {
-                            // Handle error response here
+                        error: function(xhr, status, error) {
+
                             console.error(error);
                         }
                     });
                     return false;
                 }
 
-                // Attach event listeners to the forms
-                $("#plan_to_read_form").submit(function (e) {
+                $("#plan_to_read_form").submit(function(e) {
                     e.preventDefault();
                     submitForm("plan_to_read_form", "Plan-To-Read");
                 });
 
-                $("#on_hold_form").submit(function (e) {
+                $("#on_hold_form").submit(function(e) {
                     e.preventDefault();
                     submitForm("on_hold_form", "On-Hold");
                 });
 
-                $("#dropped_form").submit(function (e) {
+                $("#dropped_form").submit(function(e) {
                     e.preventDefault();
                     submitForm("dropped_form", "Dropped");
                 });
 
-                $("#completed_form").submit(function (e) {
+                $("#completed_form").submit(function(e) {
                     e.preventDefault();
                     submitForm("completed_form", "Completed");
                 });

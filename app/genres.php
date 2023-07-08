@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<?php include_once('../config/js.config.php') ?>
 
     <?php include_once('../includes/header.php');
     if (isset($_REQUEST['genre'])) {
@@ -109,8 +110,8 @@
 
     <main>
         <div class="container-genre">
-            <div class="row w-100 mt-4">
-                <div class="col-3 bg-light rounded">
+            <div class="row w-100 mt-4 p-0">
+                <div class="col-12 order-md-1 order-2 order-lg-1 order-xl-1 p-0 order-xs-2 order-sm-2 order-xxl-1 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 col-md-3 col-xxxl-3 bg-light rounded">
                     <form action="./genres.php" method="GET" class="w-100 filter">
                         <div class="language-filter mb-4">
                             <h5 class="form-label">
@@ -138,8 +139,8 @@
                                 echo '
                               
                               <div class="form-check">
-                                  <input class="form-check-input carsor-pointer" type="checkbox" name="genre[]" value="' . $encrypted_genre_id . '" id="genres_search' . $key . '">
-                                  <label class="form-check-label carsor-pointer" for="genres_search' . $key . '">
+                                  <input class="form-check-input carsor-pointer" type="checkbox" name="genre[]" value="' . $encrypted_genre_id . '" id="genres_search' . $value['genre_id'] . '">
+                                  <label class="form-check-label carsor-pointer" for="genres_search' . $value['genre_id'] . '">
                                      ' . $value['genre_name'] . '
                                   </label>
                               </div>
@@ -159,13 +160,15 @@
 
                     </form>
                 </div>
-                <div class="col-9">
+                <div class="col-12 order-md-1 order-1 order-lg-2 order-xl-2 order-xs-1 p-0 order-sm-1 order-xxl-2 col-sm-12 col-xs-12 col-lg-9 col-xl-9 col-xxl-9 col-md-9 col-xxxl-9">
                     <?php
 
                     if (!empty($genre_id)) {
                         foreach ($genre_id as $key => $value) {
+                            echo '<script>
+                            $("#genres_search'. $value .'").prop("checked", true);
+                           </script>';
                             $genres_result= $genres_obj->get('genre_id',$value);
-                          
                             $genre_name[]=$genres_result['genre_name'];
                         }
                         $genre_name_string = implode(', ', $genre_name);
@@ -177,7 +180,7 @@
 
                     } else {
                         echo '
-                            <div class="heading-section pt-0 mt-0">
+                            <div class="heading-section p-0 mt-0">
                                 <h1>Book Genres</h1>
                             </div>
                             
@@ -198,7 +201,7 @@
                             ';
                     }
                     ?>
-                    <div class="container-fluid pt-4">
+                    <div class="container-fluid ">
                         
                         <div class="row">
                             <?php
@@ -207,7 +210,7 @@
                                 $authorobj=new  MasterClass('authors');
                                 $authorname=$authorobj->get("author_id",$value['author_id']);
                                 echo '
-                                <div class="col-4">
+                                <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 col-xxxl-4">
                                     <a class="text-decoration-none" href="./book_details.php?book_id='.$value['book_id'].'">
                                     <div class="book-card position-relative w-100">
                                         <div class=" badge position-absolute  bg-danger">
@@ -216,7 +219,7 @@
                                         <div class="book-card__cover">
                                             <div class="book-card__book">
                                                 <div class="book-card__book-front">
-                                                    <img class="book-card__img" src="'.base_url.$value["book_image"].'" />
+                                                    <img class="book-card__img img-fluid" src="'.base_url.$value["book_image"].'" />
                                                 </div>
                                                 <div class="book-card__book-back"></div>
                                                 <div class="book-card__book-side"></div>
@@ -261,7 +264,6 @@
 
         </div>
     </main>
-    <?php include_once('../config/js.config.php') ?>
 
     <?php include_once('../includes/footer.php') ?>
 
