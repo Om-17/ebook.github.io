@@ -122,18 +122,18 @@ if (isset($_SESSION['User']))
                 var username = $('#username').val();
                 var password = $('#password').val();
 
+                if (username === '') {
+                    $('#username').addClass('is-invalid')
+                    $('#username-invalid').text('Username is Required.')
+                    $('#username-invalid').addClass("d-block")
+                    return ;
+                }
                 if ( password === '') {
                    
                     $('#password').addClass('is-invalid')
                     $('#password-invalid').text('Password is Required.')
                     $('#password-invalid').addClass("d-block")
 
-                    return ;
-                 }
-                if (username === '') {
-                    $('#username').addClass('is-invalid')
-                    $('#username-invalid').text('Username is Required.')
-                    $('#username-invalid').addClass("d-block")
                     return ;
                  }
                 

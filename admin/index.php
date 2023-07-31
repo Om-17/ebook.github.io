@@ -16,7 +16,7 @@
 
   <?php include_once('./includes/header.php');
 
-$user = new MasterClass('users');
+$user = new DBclass('users');
 $today = date('Y-m-d');
 $yearConditions = ['YEAR(joining_date)' => 'YEAR("' . $today . '")', 'is_admin' => 0];
 $yearcount = $user->count($yearConditions);
@@ -26,9 +26,9 @@ $todayConditions = ['DATE(joining_date)' => 'DATE("' . $today . '")', 'is_admin'
 $todaycount = $user->count($todayConditions);
 $totalConditions = ['is_admin' => 0];
 $totalcount = $user->count($totalConditions);
-$genres = new MasterClass('genres');
+$genres = new DBclass('genres');
 $totalgenres = $genres->count([]);
-$book = new MasterClass('books');
+$book = new DBclass('books');
 $totalbooks = $book->count([]);
 ?>
 </head>
@@ -197,3 +197,10 @@ $totalbooks = $book->count([]);
 </body>
 
 </html>
+
+<?php 
+$user=null;
+$book=null;
+$genres=null;
+
+?>

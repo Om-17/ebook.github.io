@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include_once('../classes/masterclass.php');
+include_once('../classes/DBclass.php');
 $genres_obj=new QuerySet('genres');
 $genres_result=$genres_obj->limit(10)->get();
 
@@ -24,6 +24,15 @@ $genres_result=$genres_obj->limit(10)->get();
     <nav id="navbar" class="navbar">
       <ul>
         <li><a class="nav-link  active" href="./">Home</a></li>
+        <?php
+        if(isset($_SESSION['user'])){
+          if($_SESSION['user']['is_admin']){
+            echo ' <li><a class="nav-link" href="'.base_url.'/admin/">Admin</a></li>';
+          }
+        }
+        
+        ?>
+       
         <li><a class="nav-link " href="#books">Books</a></li>
 
         <li class=" dropdown"><a  href="genres.php" class="nav-link text-decoration-none"><span>Genres</span> <i
@@ -52,18 +61,7 @@ $genres_result=$genres_obj->limit(10)->get();
         </li>
 
         <li><a class="nav-link " href="./authors.php">Authors</a></li>
-        <li><a class="nav-link " href="#contact">Contact us</a></li>
-        <!-- <li class=" dropdown "><a href="#" class="nav-link text-decoration-none h-100 w-100 "><i class=" fas fs-3 fa-user"></i></a>
-            <ul>
-              <li><a class="nav-link " href="#">Drop Down 1</a></li>
-            
-
-              <li><a class="nav-link " href="#">Drop Down 2</a></li>
-              <hr>
-              <li><a class="nav-link " href="#">Drop Down 3</a></li>
-              <li><a class="nav-link " href="#">Drop Down 4</a></li>
-            </ul>
-          </li> -->
+      
         <?php
 
         if (!isset($_SESSION['user'])) {
@@ -99,8 +97,7 @@ $genres_result=$genres_obj->limit(10)->get();
             <hr class="dropdown-divider">
           </li>
             <li><a class="dropdown-item" href="./mybooks.php">Mybooks</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-           
+          
             <li><a class="dropdown-item" href="./logout.php">Log out</a></li>
           </ul>
         </div>
@@ -115,25 +112,23 @@ $genres_result=$genres_obj->limit(10)->get();
 
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="bi bi-x-lg"></i></a>
         <li>
-          <a href="#">Home</a>
+          <a href="./">Home</a>
 
         </li>
         <li>
-          <a href="#">Genres</a>
+          <a href="book.php">books</a>
 
         </li>
         <li>
-          <a href="#">Authors</a>
+          <a href="genres.php">Genres</a>
 
         </li>
         <li>
-
-          <a href="#">Trending</a>
-        </li>
-        <li>
-          <a hr◘ef="#">Contact us</a>
+          <a href="author.php">Authors</a>
 
         </li>
+      
+      
         <button onclick="loginlink()" class="login-btn mt-3 text-decoration-none " href="#about">Login</button>
         <button onclick="signuplink()" class="radial-out-btn  mt-3 text-decoration-none " href="#about"><span>Sign
             Up</span></button>
@@ -144,3 +139,5 @@ $genres_result=$genres_obj->limit(10)->get();
     </div>
   </div>
 </header>
+
+<?php $genres_obj=null; ?>

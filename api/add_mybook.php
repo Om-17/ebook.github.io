@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include_once('../classes/masterclass.php');
+include_once('../classes/DBclass.php');
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
@@ -11,9 +11,10 @@ if(isset($REQUEST['status'])){
     // http_response_code(400);
     $book_id=$REQUEST['book_id'];
     $status=$REQUEST['status'];
-    $mybookobj = new MasterClass('mybooks');
-    $exist= $mybookobj ->filter(['book_id'=>$book_id,"user_id"=>$_SESSION['user']['id']]);
-    if(empty($exist)){
+    $mybookobj = new DBclass('mybooks');
+    $exist= $mybookobj ->aexists(['book_id'=>$book_id,"user_id"=>$_SESSION['user']['id']]);
+    
+    if(!$exist){
         $mybookparam=[
             "book_id"=>$book_id,
             "status"=>$status,
@@ -36,7 +37,7 @@ if(isset($REQUEST['status'])){
 
 }
 
-
+$mybookobj=null;
 
 
 

@@ -204,7 +204,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
 
   if ($request_method == 'POST') {
-    $master = new MasterClass('genres');
+    $master = new DBclass('genres');
     if (isset($_POST['genre_name'])) {
 
       $genre_name = $_POST['genre_name'];

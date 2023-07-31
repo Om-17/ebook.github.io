@@ -11,20 +11,78 @@
 </head>
 
 <body>
+<?php include_once('../config/js.config.php') ?>
 
     <?php include_once('../includes/header.php');
+     
     if (isset($_GET['book_id'])) {
         $book_id = $_GET['book_id'];
-        $bookObj = new MasterClass('books');
+        $bookObj = new DBclass('books');
         $bookResut = $bookObj->get('book_id', $book_id);
-        $authorObj = new MasterClass('authors');
+        $authorObj = new DBclass('authors');
         $author_get = $authorObj->get('author_id', $bookResut['author_id']);
-        $publisherObj = new MasterClass('publishers');
-        $genresbookObj = new MasterClass('book_genres');
+        $publisherObj = new DBclass('publishers');
+        $genresbookObj = new DBclass('book_genres');
         $genresbookResult = $genresbookObj->filter(['book_id' => $book_id]);
-        $mybookobj = new MasterClass('mybooks');
-        $exist = $mybookobj->exists('book_id', $book_id);
+        $mybookobj = new DBclass('mybooks');
+        $exist=false;
+        $mybookid=NAN;
         $publisher_get = $publisherObj->get('publisher_id', $bookResut['publisher_id']);
+        if(isset($_SESSION['user'])){
+            
+            $exist = $mybookobj->aexists(['book_id'=> $book_id,'user_id'=>$_SESSION['user']['id']]);
+            if($exist){
+                            $mybookresult1 = $mybookobj->filter(['book_id'=>$book_id,'user_id'=>$_SESSION['user']['id']]);
+                            $mybookid=$mybookresult1[0]['mybook_id'];
+                            
+                        }
+         
+            $mybookresult=$mybookobj->filter(['book_id'=>$book_id,'user_id'=>$_SESSION['user']['id']]);
+           
+            if(!isset($mybookresult['message'])){
+                // print_r($mybookresult);
+              
+                $bookstatus=$mybookresult[0]['status'];
+                echo '<script type="text/javascript">
+                $(document).ready(function () {
+
+                    var status = "'.$bookstatus.'"
+
+                    if(status =="On-Hold"){
+                    $("#on_hold").addClass("btn-active");
+                    $("#plan_to_read").removeClass("btn-active");
+                    $("#dropped").removeClass("btn-active");
+                    $("#completed").removeClass("btn-active");
+                    }
+                   
+                    else if(status =="Dropped"){
+                    $("#on_hold").removeClass("btn-active");
+                    $("#plan_to_read").removeClass("btn-active");
+                    $("#dropped").addClass("btn-active");
+                    $("#completed").removeClass("btn-active");
+                    }
+                    else if(status =="Completed"){
+                    $("#on_hold").removeClass("btn-active");
+                    $("#plan_to_read").removeClass("btn-active");
+                    $("#dropped").removeClass("btn-active");
+                    $("#completed").addClass("btn-active");
+                    }
+                    else if(status =="Plan-To-Read"){
+                    $("#on_hold").removeClass("btn-active");
+                    $("#plan_to_read").addClass("btn-active");
+                    $("#dropped").removeClass("btn-active");
+                    $("#completed").removeClass("btn-active");
+                    }
+                   
+                });
+                
+                </script>';
+            }
+            else{
+                $bookstatus="";
+            }
+           
+        }
     } else {
         redirect('./app/home.php');
     }
@@ -32,7 +90,6 @@
 
     ?>
     <?php include_once('../loader.php') ?>
-    <?php include_once('../config/js.config.php') ?>
 
     <script type="text/javascript">
         function backlink() {
@@ -43,7 +100,9 @@
             }
 
         }
+        
         $(document).ready(function() {
+
             var flipbook = $("#read").flipBook({
                 //Layout Setting
 
@@ -61,6 +120,7 @@
                     flipMp3: "../assets/mp3/turnPage.mp3",
                     spinner: "../assets/img/spinner.gif",
                 },
+                // loadAllPages:true,
                 // BTN SETTING
                 btnShare: {
                     enabled: false
@@ -196,7 +256,7 @@
             // print_r($genresbookResult);
             foreach ($genresbookResult as $key => $value) {
                 // echo( $value['genre_id']);
-                $genresObj = new MasterClass('genres');
+                $genresObj = new DBclass('genres');
                 $genre_result = $genresObj->get('genre_id', $value['genre_id']);
                 $encrypted_genre_id = base64_encode($value['genre_id']);
 
@@ -243,20 +303,27 @@
                                     <div class="wishdropdown-content">
                                         <form  method="post" id="plan_to_read_form">
                                           <input type="number" name="book_id" value="' . $bookResut['book_id'] . '" hidden>
-                                          <button class="btn" type="submit" name="plan_to_read">Plan To Read</button>
+                                          <button class="btn " type="submit" id="plan_to_read" name="plan_to_read">Plan To Read</button>
                                         </form>
                                         <form  method="post" id="on_hold_form">
                                           <input type="number" name="book_id" value="' . $bookResut['book_id'] . '" hidden>
-                                          <button class="btn" type="submit" name="on_hold">On-Hold</button>
+                                          <button class="btn" type="submit" id="on_hold" name="on_hold">On-Hold</button>
                                         </form>
                                         <form  method="post" id="dropped_form">
                                           <input type="number" name="book_id" value="' . $bookResut['book_id'] . '" hidden>
-                                          <button class="btn" type="submit" name="dropped">Dropped</button>
+                                          <button class="btn" type="submit" id="dropped" name="dropped">Dropped</button>
                                         </form>
                                         <form  method="post" id="completed_form">
                                           <input type="number" name="book_id" value="' . $bookResut['book_id'] . '" hidden>
-                                          <button class="btn" type="submit" name="completed">Completed</button>
+                                          <button class="btn" type="submit" id="completed" name="completed">Completed</button>
                                         </form>
+                                        
+                                            <form  method="post" class="d-none" id="remove_form">
+                                             
+                                              <button class="btn btn-remove" type="submit" id="remove" name="remove">Remove</button>
+                                            </form>
+    
+                                      
                                   </div>
                                 </div>
                                 <button id="read" class="m-0 read-book-btn login-btn">Read Book</button>
@@ -329,8 +396,10 @@
                 $(document).ready(function() {
 
                     if (<?php echo $exist ? 'true' : 'false'; ?>) {
-                        // Redirect to login page
+                        
                         $('#mybookicon').removeClass('fa-plus');
+                        $("#remove_form").addClass("d-block")
+                        $("#remove_form").removeClass("d-none")
                         $('#mybookicon').addClass('fa-edit');
                     } else {
                         $('#mybookicon').addClass('fa-plus');
@@ -367,51 +436,131 @@
                                 timeOut: 1500,
                                 positionClass: 'toast-bottom-right'
                             };
-
+                            $('#mybookicon').removeClass('fa-plus');
+                                $('#mybookicon').addClass('fa-edit');
+                            // console.log("exculated");
                             if (response.last_id) {
-                                $('#mybookicon').addClass('fa-edit');
-                                $('#mybookicon').removeClass('fa-plus');
+                                $("#remove_form").addClass("d-block")
+                        $("#remove_form").removeClass("d-none")
                                 toastr.success("<?php echo "" . $bookResut['book_title'] . " Sucessfully Added"; ?>");
-                                console.log(response.message);
+                                // console.log(response.message);
                             } else {
-                                $('#mybookicon').addClass('fa-edit');
-                                $('#mybookicon').removeClass('fa-plus');
+                                $("#remove_form").addClass("d-block")
+                        $("#remove_form").removeClass("d-none")
                                 toastr.success("<?php echo '' . $bookResut['book_title'] . ' Sucessfully Updated'; ?>");
 
                             }
                         },
                         error: function(xhr, status, error) {
 
-                            console.error(error);
+                            toastr.error("something went wrong please try again")
+
                         }
                     });
                     return false;
                 }
-
+             
                 $("#plan_to_read_form").submit(function(e) {
                     e.preventDefault();
+                    $("#on_hold").removeClass("btn-active");
+                    $("#plan_to_read").addClass("btn-active");
+                    $("#dropped").removeClass("btn-active");
+                    $("#completed").removeClass("btn-active");
                     submitForm("plan_to_read_form", "Plan-To-Read");
+                    
                 });
 
                 $("#on_hold_form").submit(function(e) {
                     e.preventDefault();
+                    $("#on_hold").addClass("btn-active");
+                    $("#plan_to_read").removeClass("btn-active");
+                    $("#dropped").removeClass("btn-active");
+                    $("#completed").removeClass("btn-active");
                     submitForm("on_hold_form", "On-Hold");
                 });
 
                 $("#dropped_form").submit(function(e) {
                     e.preventDefault();
+                    $("#on_hold").removeClass("btn-active");
+                    $("#plan_to_read").removeClass("btn-active");
+                    $("#dropped").addClass("btn-active");
+                    $("#completed").removeClass("btn-active");
                     submitForm("dropped_form", "Dropped");
                 });
 
                 $("#completed_form").submit(function(e) {
                     e.preventDefault();
+                    $("#on_hold").removeClass("btn-active");
+                    $("#plan_to_read").removeClass("btn-active");
+                    $("#dropped").removeClass("btn-active");
+                    $("#completed").addClass("btn-active");
                     submitForm("completed_form", "Completed");
                 });
+          
+                    function remove_mybook() {
+                   
+                    const actionUrl = "../api/remove_mybook.php"
+
+                    $.ajax({
+                        url: actionUrl,
+                        headers: {
+                            "Access-Control-Allow-Origin": "*",
+                            "Content-Type": "application/json, charset=utf-8"
+                        },
+                        method: "POST",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            "book_id": <?php echo "" . $bookResut["book_id"] . ""; ?>,
+                           
+                        }),
+
+                        success: function(response) {
+                            toastr.options = {
+                                closeButton: true,
+                                timeOut: 1500,
+                                positionClass: 'toast-bottom-right'
+                            };
+
+                            if(response.status){
+                                $('#mybookicon').addClass('fa-plus');
+                        $('#mybookicon').removeClass('fa-edit');
+                        $("#remove_form").addClass("d-none")
+                        $("#remove_form").removeClass("d-block")
+                        $("#on_hold").removeClass("btn-active");
+                    $("#plan_to_read").removeClass("btn-active");
+                    $("#dropped").removeClass("btn-active");
+                    $("#completed").removeClass("btn-active");
+                                toastr.success("<?php echo "" . $bookResut['book_title'] . " Sucessfully Removed"; ?>")
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            toastr.error("something went wrong please try again")
+
+}
+                    
+                    });
+
+                }
+                $("#remove_form").submit(function(e) {
+                    e.preventDefault();
+                 
+                    remove_mybook();
+                });
+             
             </script>
         </div>
     </main>
 
-    <?php include_once('../includes/footer.php') ?>
+    <?php include_once('../includes/footer.php');
+    $authorObj=null;
+    $bookObj=null;
+    $genresbookObj=null;
+    $genresObj=null;
+    $mybookobj=null;
+    $publisherObj=null;
+    
+    
+    ?>
 
 </body>
 

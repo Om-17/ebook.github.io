@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-require_once('../classes/masterclass.php');
+require_once('../classes/DBclass.php');
 check_admin()
 
 ?>

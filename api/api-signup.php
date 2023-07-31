@@ -82,5 +82,5 @@ if ($request_method == 'POST') {
 
 }
 
-
+$user=null;
 ?>

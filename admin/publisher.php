@@ -21,7 +21,7 @@
 include_once('./includes/header.php');
 
 
-$allpublisher = new MasterClass('publishers');
+$allpublisher = new DBclass('publishers');
 $result = $allpublisher->getAll();
 
 $request_method = $_SERVER["REQUEST_METHOD"];
@@ -199,7 +199,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
 
   if ($request_method == 'POST') {
-    $publisher= new MasterClass('publishers');
+    $publisher= new DBclass('publishers');
     if (isset($_POST['publisher_name'])) {
       
       $publisher_name = $_POST['publisher_name'];
@@ -352,3 +352,9 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 </body>
 
 </html> 
+
+<?php 
+$allpublisher=null;
+$publisher=null;
+
+?>

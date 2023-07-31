@@ -22,7 +22,7 @@
         foreach ($encrypted_genre_id as $key => $value) {
             $genre_id[] = base64_decode($value);
         }
-        $genresbookObj = new MasterClass('book_genres');
+        $genresbookObj = new DBclass('book_genres');
         $genresbookResult = array();
         foreach ($genre_id as $key => $value) {
 
@@ -36,8 +36,8 @@
         $uniqueBookIds = array();
         $uniqueGenres = array();
         $book_result = array();
+        $book_obj = new DBclass('books');
         if (!empty($genresbookResult)) {
-            $book_obj = new MasterClass('books');
             foreach ($genresbookResult as $key => $value) {
 
            
@@ -75,7 +75,6 @@
         // all genres    
       
     } else {
-        $book_obj = new MasterClass('books');
         if(isset($_REQUEST['language'])){
             $book_language=$_REQUEST['language'];
             if(isset($_REQUEST['language'])){
@@ -102,7 +101,7 @@
         // redirect('./app/home.php');
     }
 
-    $genres_obj = new MasterClass('genres');
+    $genres_obj = new DBclass('genres');
     $allgenres = $genres_obj->getAll();
 
     ?>
@@ -207,7 +206,7 @@
                             <?php
                             foreach ($book_result as $key => $value) {
                                 
-                                $authorobj=new  MasterClass('authors');
+                                $authorobj=new  DBclass('authors');
                                 $authorname=$authorobj->get("author_id",$value['author_id']);
                                 echo '
                                 <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 col-xxxl-4">
@@ -265,7 +264,14 @@
         </div>
     </main>
 
-    <?php include_once('../includes/footer.php') ?>
+    <?php include_once('../includes/footer.php');
+    $book_obj=null;
+    $authorobj=null;
+    $genres_obj=null;
+    $genresbookObj=null;
+    
+    
+    ?>
 
 </body>
 

@@ -21,7 +21,7 @@
         foreach ($encrypted_author_id as $key => $value) {
             $author_id[] = base64_decode($value);
         }
-        $authorsbookObj = new MasterClass('books'); 
+        $authorsbookObj = new DBclass('books'); 
       
         foreach ($author_id as $key => $value) {
             
@@ -35,12 +35,12 @@
       
       
     } else {
-        $book_obj = new MasterClass('books');
+        $book_obj = new DBclass('books');
         $authorsbookResult=$book_obj->getAll();
         
     }
 
-    $author_obj = new MasterClass('authors');
+    $author_obj = new DBclass('authors');
     $allauthor = $author_obj->getAll();
 
     ?>
@@ -138,7 +138,7 @@
                             foreach ($authorsbookResult as $key => $value) {
                              
 
-                                $authorobj = new  MasterClass('authors');
+                                $authorobj = new  DBclass('authors');
                                 $authorname=$authorobj->get("author_id",$value['author_id']);
                                 echo '
                                 <div class="col-4">
@@ -192,7 +192,13 @@
         </div>
     </main>
 
-    <?php include_once('../includes/footer.php') ?>
+    <?php include_once('../includes/footer.php');
+    
+    $authorsbookObj =null;
+    $book_obj=null;
+    $authorobj=null;
+    $author_obj=null;
+    ?>
 
 </body>
 

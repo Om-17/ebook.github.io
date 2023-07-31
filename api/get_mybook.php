@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include_once('../classes/masterclass.php');
+include_once('../classes/DBclass.php');
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
@@ -10,7 +10,7 @@ $REQUEST = json_decode(file_get_contents("php://input"),true);
 if(isset($REQUEST['status'])){
     // http_response_code(400);
     $status=$REQUEST['status'];
-    $mybookobj = new MasterClass('mybooks');
+    $mybookobj = new DBclass('mybooks');
     if($status=="All"){
         $mybookparam=[
             "user_id"=>$_SESSION['user']['id']
@@ -27,8 +27,8 @@ if(isset($REQUEST['status'])){
 
     }
     if(!isset($mybook['message'])){
-        $bookobj = new MasterClass('books');
-        $authorobj = new MasterClass('authors');
+        $bookobj = new DBclass('books');
+        $authorobj = new DBclass('authors');
         $mybookresult = array();
         
         foreach ($mybook as $mybookvalue) {
@@ -67,6 +67,9 @@ if(isset($REQUEST['status'])){
 
 
 
+$authorobj=null;
+$mybookobj=null;
+$bookobj=null;
 
 
 

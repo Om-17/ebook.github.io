@@ -29,7 +29,7 @@
       });
 
         jQuery(function() {
-          jQuery('.multiSelect').each(function(e) {
+          jQuery('.multiSelect1').each(function(e) {
             var self = jQuery(this);
             var field = self.find('.multiSelect_field');
             var fieldOption = field.find('option');
@@ -37,7 +37,7 @@
         
             field.hide().after(`<div class="multiSelect_dropdown"></div>
                                 <span class="multiSelect_placeholder">` + placeholder + `</span>
-                                <ul class="multiSelect_list"></ul>
+                                <ul class="multiSelect_list" ></ul>
                                 <span class="multiSelect_arrow"></span>`);
             
             fieldOption.each(function(e) {

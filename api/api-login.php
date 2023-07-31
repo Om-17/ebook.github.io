@@ -78,6 +78,8 @@ else{
     echo json_encode($data);
 }
 
+$user=null;
+$updatelastLogin=null;
 
 
 ?>

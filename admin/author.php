@@ -17,7 +17,7 @@
 include_once('./includes/header.php');
 
 
-$allauthor = new MasterClass('authors');
+$allauthor = new DBclass('authors');
 $result = $allauthor->getAll();
 
 $request_method = $_SERVER["REQUEST_METHOD"];
@@ -203,7 +203,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 
 
   if ($request_method == 'POST') {
-    $author= new MasterClass('authors');
+    $author= new DBclass('authors');
     if (isset($_POST['author_name'])) {
       
       $author_name = $_POST['author_name'];
@@ -352,3 +352,9 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 </body>
 
 </html>
+
+<?php
+$allauthor=null;
+$author=null;
+
+?>

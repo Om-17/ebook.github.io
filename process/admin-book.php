@@ -1,10 +1,10 @@
 <?php
 include_once('../config.php');
-require_once('../classes/masterclass.php');
+require_once('../classes/DBclass.php');
 session_start();
 $url='./admin/book.php';
-$book_obj = new MasterClass('books');
-$book_genres = new MasterClass('book_genres');
+$book_obj = new DBClass('books');
+$book_genres = new DBClass('book_genres');
 
 
 // create book 
@@ -37,8 +37,8 @@ if(isset($_POST['book_title'])){
     $book_summary = $_POST['book_summary'];
     $book_page = $_POST['book_page'];
     $book_type = $_POST['book_type'];
-    $book_image = NAN;
-    $book_pdf = NAN;
+    $book_image = null;
+    $book_pdf = null;
     if (isset($_POST['trending_book'])) {
         $trending_book= $_POST['trending_book'];
       
@@ -90,7 +90,7 @@ if(isset($_POST['book_title'])){
             $book_image = "/media/uploads/books_image/" . basename($_FILES['book_image']['name']);
         }
         else{
-            $book_image = NAN;
+            $book_image = null;
         }
         }
         if (isset($_FILES['book_pdf'])) {
@@ -129,7 +129,7 @@ if(isset($_POST['book_title'])){
         
             }
             else{
-            $book_pdf = NAN;
+            $book_pdf = null;
 
             }
     
@@ -202,11 +202,11 @@ if(isset($_POST['delete_id'])){
         $book_image_url=base_app.$get_book['book_image'];
         $book_pdf_url=  base_app.$get_book['book_pdf'];
         try {
-            if($book_image_url!=NAN){
+            if(!is_null($book_image_url)){
 
                 unlink($book_image_url);
             }
-            if($book_pdf_url!=NAN){
+            if(!is_null($book_pdf_url)){
             unlink($book_pdf_url);
             }
         } catch (\Throwable $th) {
@@ -234,7 +234,11 @@ if(isset($_POST['delete_id'])){
         }
     }
     else{
+        $_SESSION["error"] = "Something went wrong";
+
         redirect($url);
+        exit();
+
         
     }
 
@@ -242,6 +246,7 @@ if(isset($_POST['delete_id'])){
     else{
         $_SESSION["error"] = "Book is not available !";
         redirect($url);
+        exit();
 
     }
 }
