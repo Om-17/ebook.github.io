@@ -54,7 +54,7 @@
     <main>
         <div class="container-genre">
             <div class="row w-100 mt-4">
-                <div class="col-3 bg-light rounded">
+                <div  class="col-12 order-md-1 order-2 order-lg-1 order-xl-1 p-0 order-xs-2 order-sm-2 order-xxl-1 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 col-md-3 col-xxxl-3 bg-light rounded">
                     <form action="./authors.php" method="GET" class="w-100 filter">
                         <div class="genres-filter">
 
@@ -89,7 +89,7 @@
 
                     </form>
                 </div>
-                <div class="col-9">
+                <div class="col-12 order-md-1 order-1 order-lg-2 order-xl-2 order-xs-1 p-0 order-sm-1 order-xxl-2 col-sm-12 col-xs-12 col-lg-9 col-xl-9 col-xxl-9 col-md-9 col-xxxl-9">
                     <?php
                     if (!empty($author_id)) {
                         foreach ($author_id as $key => $value) {
@@ -141,7 +141,7 @@
                                 $authorobj = new  DBclass('authors');
                                 $authorname=$authorobj->get("author_id",$value['author_id']);
                                 echo '
-                                <div class="col-4">
+                                <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 col-xxxl-4">
                                     <a class="text-decoration-none" href="./book_details.php?book_id='.$value['book_id'].'">
                                     <div class="book-card mb-4 w-100">
                                         <div class="book-card__cover">

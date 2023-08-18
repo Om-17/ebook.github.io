@@ -11,10 +11,10 @@
 </head>
 
 <body>
-<?php include_once('../config/js.config.php') ?>
+    <?php include_once('../config/js.config.php') ?>
 
     <?php include_once('../includes/header.php');
-     
+
     if (isset($_GET['book_id'])) {
         $book_id = $_GET['book_id'];
         $bookObj = new DBclass('books');
@@ -25,28 +25,28 @@
         $genresbookObj = new DBclass('book_genres');
         $genresbookResult = $genresbookObj->filter(['book_id' => $book_id]);
         $mybookobj = new DBclass('mybooks');
-        $exist=false;
-        $mybookid=NAN;
+        $exist = false;
+        $mybookid = NAN;
+        $member = 0;
         $publisher_get = $publisherObj->get('publisher_id', $bookResut['publisher_id']);
-        if(isset($_SESSION['user'])){
-            
-            $exist = $mybookobj->aexists(['book_id'=> $book_id,'user_id'=>$_SESSION['user']['id']]);
-            if($exist){
-                            $mybookresult1 = $mybookobj->filter(['book_id'=>$book_id,'user_id'=>$_SESSION['user']['id']]);
-                            $mybookid=$mybookresult1[0]['mybook_id'];
-                            
-                        }
-         
-            $mybookresult=$mybookobj->filter(['book_id'=>$book_id,'user_id'=>$_SESSION['user']['id']]);
-           
-            if(!isset($mybookresult['message'])){
+        if (isset($_SESSION['user'])) {
+            $member = $_SESSION['user']['is_member'];
+            $exist = $mybookobj->aexists(['book_id' => $book_id, 'user_id' => $_SESSION['user']['id']]);
+            if ($exist) {
+                $mybookresult1 = $mybookobj->filter(['book_id' => $book_id, 'user_id' => $_SESSION['user']['id']]);
+                $mybookid = $mybookresult1[0]['mybook_id'];
+            }
+
+            $mybookresult = $mybookobj->filter(['book_id' => $book_id, 'user_id' => $_SESSION['user']['id']]);
+
+            if (!isset($mybookresult['message'])) {
                 // print_r($mybookresult);
-              
-                $bookstatus=$mybookresult[0]['status'];
+
+                $bookstatus = $mybookresult[0]['status'];
                 echo '<script type="text/javascript">
                 $(document).ready(function () {
 
-                    var status = "'.$bookstatus.'"
+                    var status = "' . $bookstatus . '"
 
                     if(status =="On-Hold"){
                     $("#on_hold").addClass("btn-active");
@@ -77,14 +77,12 @@
                 });
                 
                 </script>';
+            } else {
+                $bookstatus = "";
             }
-            else{
-                $bookstatus="";
-            }
-           
         }
     } else {
-        redirect('./app/home.php');
+        redirect('/app/home.php');
     }
 
 
@@ -100,8 +98,14 @@
             }
 
         }
-        
+ 
+
+
         $(document).ready(function() {
+            if (!<?php echo isset($_SESSION['user']) ? 'true' : 'false'; ?>) {
+                // Redirect to login page
+                window.location.href = './login.php';
+            }
 
             var flipbook = $("#read").flipBook({
                 //Layout Setting
@@ -122,10 +126,12 @@
                 },
                 // loadAllPages:true,
                 // BTN SETTING
-                btnShare: {
-                    enabled: false
+                btnBookmark: {
+                    enabled: <?php echo $member; ?>,
+
                 },
                 btnPrint: {
+                    enabled: <?php echo $member; ?>,
                     hideOnMobile: true
                 },
                 btnSearch: {
@@ -135,14 +141,16 @@
                     icon2: "search",
                 },
                 btnDownloadPages: {
-                    enabled: true,
+                    enabled: <?php echo $member; ?>,
                     title: "<?php echo $bookResut['book_title'] ?> Download",
                     icon: "fa-download",
-                    icon2: "file_download",
-                    url: "<?php echo  base_url . $bookResut['book_pdf'] ?>",
-                    name: "allPages.zip",
-                },
 
+
+                },
+                btnDownloadPdf: {
+                    enabled: <?php echo $member; ?>,
+
+                },
                 btnColor: '#1877F2',
                 sideBtnColor: '#1877F2',
                 sideBtnSize: 60,
@@ -158,36 +166,13 @@
                 },
                 // SHARING
                 btnShare: {
-                    enabled: true,
+                    enabled: false,
                     title: "Share",
                     icon: "fa-share-alt"
                 },
-                facebook: {
-                    enabled: true,
-                    url: "<?php echo  base_url . $bookResut['book_pdf'] ?>"
-                },
-                google_plus: {
-                    enabled: false
-                },
-                email: {
-                    enabled: true,
-                    url: "<?php echo  base_url . $bookResut['book_pdf'] ?>",
-                    title: "<?php echo  $bookResut['book_title'] ?>",
 
-                },
-                twitter: {
-                    enabled: true,
-                    url: "<?php echo  base_url . $bookResut['book_pdf'] ?>"
-                },
-                pinterest: {
-                    enabled: true,
-                    url: "<?php echo  base_url . $bookResut['book_pdf'] ?>"
-                }
             });
-
-
-
-        })
+        });
     </script>
     <main>
         <div class="container">
@@ -296,39 +281,82 @@
                             </div>
 
                             <div class="d-flex position-relative justify-content-end">
-                                <div class="wishdropdown">
+                             
+                                ';
 
-                                    <button class="wishdropbtn" ><i id="mybookicon" class="fa fa-plus"></i></button>
+            if ($bookResut['book_type'] != "Premiere") {
 
-                                    <div class="wishdropdown-content">
-                                        <form  method="post" id="plan_to_read_form">
-                                          <input type="number" name="book_id" value="' . $bookResut['book_id'] . '" hidden>
-                                          <button class="btn " type="submit" id="plan_to_read" name="plan_to_read">Plan To Read</button>
-                                        </form>
-                                        <form  method="post" id="on_hold_form">
-                                          <input type="number" name="book_id" value="' . $bookResut['book_id'] . '" hidden>
-                                          <button class="btn" type="submit" id="on_hold" name="on_hold">On-Hold</button>
-                                        </form>
-                                        <form  method="post" id="dropped_form">
-                                          <input type="number" name="book_id" value="' . $bookResut['book_id'] . '" hidden>
-                                          <button class="btn" type="submit" id="dropped" name="dropped">Dropped</button>
-                                        </form>
-                                        <form  method="post" id="completed_form">
-                                          <input type="number" name="book_id" value="' . $bookResut['book_id'] . '" hidden>
-                                          <button class="btn" type="submit" id="completed" name="completed">Completed</button>
-                                        </form>
-                                        
-                                            <form  method="post" class="d-none" id="remove_form">
-                                             
-                                              <button class="btn btn-remove" type="submit" id="remove" name="remove">Remove</button>
-                                            </form>
-    
-                                      
-                                  </div>
-                                </div>
-                                <button id="read" class="m-0 read-book-btn login-btn">Read Book</button>
+                echo '
+                <div class="wishdropdown">
+
+                <button class="wishdropbtn" ><i id="mybookicon" class="fa fa-plus"></i></button>
+
+                <div class="wishdropdown-content">
+                   
+                <button class="btn " type="button" id="plan_to_read" name="plan_to_read">Plan To Read</button>
+                         
+                <button class="btn" type="button" id="on_hold" name="on_hold">On-Hold</button>
+              
+               <button class="btn" type="button" id="dropped" name="dropped">Dropped</button>
+             
+               
+               <button class="btn" type="button" id="completed" name="completed">Completed</button>
+               
+                <button class="btn btn-remove " type="button" id="remove" name="remove">Remove</button>
+                 
+
+                  
+              </div>
+            </div>
+                <button id="read"  class="m-0 read-book-btn login-btn">Read Book</>
+                
+                ';
+            } else {
+                if (isset($_SESSION['user'])) {
+                    if ($_SESSION['user']['is_member']) {
+                        echo '
+                        <div class="wishdropdown">
+
+                        <button class="wishdropbtn" ><i id="mybookicon" class="fa fa-plus"></i></button>
+
+                        <div class="wishdropdown-content">
+                          
+                              <button class="btn " type="button" id="plan_to_read" name="plan_to_read">Plan To Read</button>
+                         
+                             <button class="btn" type="button" id="on_hold" name="on_hold">On-Hold</button>
+                           
+                            <button class="btn" type="button" id="dropped" name="dropped">Dropped</button>
+                          
+                            
+                            <button class="btn" type="button" id="completed" name="completed">Completed</button>
+                            
+                                 <button class="btn btn-remove " type="button" id="remove" name="remove">Remove</button>
+                              
+                          
+                      </div>
+                    </div>
+                        <button id="read"  class="m-0 read-book-btn login-btn">Read Book</button>';
+                    } else {
+                        echo '
+                                        <a  href="app/membership.php" class="btn btn-warning">Subscribe</a>
+                                        ';
+                    }
+                } else {
+                    echo '
+                                        <a  href="app/membership.php" class="btn btn-warning">Subscribe</a>
+                                        ';
+                }
+            }
+
+            if (isset($_SESSION['user'])) {
+                if ($_SESSION['user']['is_member']) {
+                    echo '
                                 <button class="btn btn-outline-primary download-btn" onclick="downloadPDF()">Download</button>
+                                  ';
+                }
+            }
 
+            echo '
                             </div>
                         </div>
                     </div>
@@ -340,9 +368,7 @@
                             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
                                 data-bs-target="#book-description" type="button" role="tab" aria-controls="book-description"
                                 aria-selected="true">Book Storyline</button>
-                            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
-                                data-bs-target="#book-review" type="button" role="tab" aria-controls="book-review"
-                                aria-selected="false">Book Review</button>
+                         
                             <!-- <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button> -->
                         </div>
                     </nav>
@@ -363,9 +389,14 @@
             </div>
         </div>
 
-        <script type="text/javascript">
+        ';
+
+            if (isset($_SESSION['user'])) {
+                if ($_SESSION['user']['is_member']) {
+                    echo '
+                    <script type="text/javascript">
         function downloadPDF() {
-          // Create a new invisible link element
+            // Create a new invisible link element
           const link = document.createElement("a")
           link.style.display = "none"
           
@@ -388,7 +419,8 @@
         </script>
             
             ';
-
+                }
+            }
 
 
             ?>
@@ -396,10 +428,10 @@
                 $(document).ready(function() {
 
                     if (<?php echo $exist ? 'true' : 'false'; ?>) {
-                        
+
                         $('#mybookicon').removeClass('fa-plus');
-                        $("#remove_form").addClass("d-block")
-                        $("#remove_form").removeClass("d-none")
+                        $("#remove").addClass("d-block")
+                        $("#remove").removeClass("d-none")
                         $('#mybookicon').addClass('fa-edit');
                     } else {
                         $('#mybookicon').addClass('fa-plus');
@@ -408,10 +440,10 @@
 
                 });
 
-                function submitForm(formId, status) {
-                    const form = $("#" + formId);
+                function submitForm(status) {
+
                     const actionUrl = "../api/add_mybook.php"
-                    const formData = form.serialize();
+
                     if (!<?php echo isset($_SESSION['user']) ? 'true' : 'false'; ?>) {
                         // Redirect to login page
                         window.location.href = './login.php';
@@ -437,68 +469,72 @@
                                 positionClass: 'toast-bottom-right'
                             };
                             $('#mybookicon').removeClass('fa-plus');
-                                $('#mybookicon').addClass('fa-edit');
+                            $('#mybookicon').addClass('fa-edit');
                             // console.log("exculated");
                             if (response.last_id) {
-                                $("#remove_form").addClass("d-block")
-                        $("#remove_form").removeClass("d-none")
+                                $("#remove").addClass("d-block")
+                                $("#remove").removeClass("d-none")
                                 toastr.success("<?php echo "" . $bookResut['book_title'] . " Sucessfully Added"; ?>");
                                 // console.log(response.message);
                             } else {
-                                $("#remove_form").addClass("d-block")
-                        $("#remove_form").removeClass("d-none")
+                                $("#remove").addClass("d-block")
+                                $("#remove").removeClass("d-none")
                                 toastr.success("<?php echo '' . $bookResut['book_title'] . ' Sucessfully Updated'; ?>");
 
                             }
                         },
                         error: function(xhr, status, error) {
-
-                            toastr.error("something went wrong please try again")
+                            toastr.options = {
+                                closeButton: true,
+                                timeOut: 1500,
+                                positionClass: 'toast-bottom-right'
+                            };
+                            toastr.error("something went wrong please try again");
 
                         }
                     });
                     return false;
                 }
-             
-                $("#plan_to_read_form").submit(function(e) {
+
+                $("#plan_to_read").click(function(e) {
                     e.preventDefault();
                     $("#on_hold").removeClass("btn-active");
                     $("#plan_to_read").addClass("btn-active");
                     $("#dropped").removeClass("btn-active");
                     $("#completed").removeClass("btn-active");
-                    submitForm("plan_to_read_form", "Plan-To-Read");
-                    
+                    submitForm("Plan-To-Read");
+
                 });
 
-                $("#on_hold_form").submit(function(e) {
+                $("#on_hold").click(function(e) {
                     e.preventDefault();
                     $("#on_hold").addClass("btn-active");
                     $("#plan_to_read").removeClass("btn-active");
                     $("#dropped").removeClass("btn-active");
                     $("#completed").removeClass("btn-active");
-                    submitForm("on_hold_form", "On-Hold");
+                    submitForm("On-Hold");
                 });
 
-                $("#dropped_form").submit(function(e) {
+                $("#dropped").click(function(e) {
                     e.preventDefault();
                     $("#on_hold").removeClass("btn-active");
                     $("#plan_to_read").removeClass("btn-active");
                     $("#dropped").addClass("btn-active");
                     $("#completed").removeClass("btn-active");
-                    submitForm("dropped_form", "Dropped");
+                    submitForm("Dropped");
                 });
 
-                $("#completed_form").submit(function(e) {
+                $("#completed").click(function(e) {
                     e.preventDefault();
                     $("#on_hold").removeClass("btn-active");
                     $("#plan_to_read").removeClass("btn-active");
                     $("#dropped").removeClass("btn-active");
                     $("#completed").addClass("btn-active");
-                    submitForm("completed_form", "Completed");
+                    submitForm("Completed");
                 });
-          
-                    function remove_mybook() {
-                   
+
+                function remove_mybook() {
+
                     const actionUrl = "../api/remove_mybook.php"
 
                     $.ajax({
@@ -511,7 +547,7 @@
                         dataType: "json",
                         data: JSON.stringify({
                             "book_id": <?php echo "" . $bookResut["book_id"] . ""; ?>,
-                           
+
                         }),
 
                         success: function(response) {
@@ -521,46 +557,46 @@
                                 positionClass: 'toast-bottom-right'
                             };
 
-                            if(response.status){
+                            if (response.status) {
                                 $('#mybookicon').addClass('fa-plus');
-                        $('#mybookicon').removeClass('fa-edit');
-                        $("#remove_form").addClass("d-none")
-                        $("#remove_form").removeClass("d-block")
-                        $("#on_hold").removeClass("btn-active");
-                    $("#plan_to_read").removeClass("btn-active");
-                    $("#dropped").removeClass("btn-active");
-                    $("#completed").removeClass("btn-active");
+                                $('#mybookicon').removeClass('fa-edit');
+                                $("#remove").addClass("d-none")
+                                $("#remove").removeClass("d-block")
+                                $("#on_hold").removeClass("btn-active");
+                                $("#plan_to_read").removeClass("btn-active");
+                                $("#dropped").removeClass("btn-active");
+                                $("#completed").removeClass("btn-active");
                                 toastr.success("<?php echo "" . $bookResut['book_title'] . " Sucessfully Removed"; ?>")
                             }
                         },
                         error: function(xhr, status, error) {
                             toastr.error("something went wrong please try again")
 
-}
-                    
+                        }
+
                     });
 
                 }
-                $("#remove_form").submit(function(e) {
+                $("#remove").click(function(e) {
                     e.preventDefault();
-                 
+
                     remove_mybook();
                 });
-             
             </script>
         </div>
     </main>
 
     <?php include_once('../includes/footer.php');
-    $authorObj=null;
-    $bookObj=null;
-    $genresbookObj=null;
-    $genresObj=null;
-    $mybookobj=null;
-    $publisherObj=null;
-    
-    
+    $authorObj = null;
+    $bookObj = null;
+    $genresbookObj = null;
+    $genresObj = null;
+    $mybookobj = null;
+    $publisherObj = null;
+
+
     ?>
+  <?php include_once('../includes/footer.php'); ?>
 
 </body>
 

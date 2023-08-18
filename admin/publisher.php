@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Authors - bookwise</title>
+  <title>Publishers - bookwise</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -119,7 +119,7 @@ $request_method = $_SERVER["REQUEST_METHOD"];
                                 <div class=\"modal-dialog modal-dialog-centered\">
                                     <div class=\"modal-content\">
                                         <div class=\"modal-header\">
-                                            <h1 class=\"modal-title fs-5\">Add Publisher</h1>
+                                            <h1 class=\"modal-title fs-5\">Update Publisher</h1>
                                             <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>
                                         </div>
                                         <form method=\"POST\" action=\"./publisher.php\" id=\"publisherform\" class=\"needs-validation\" novalidate>

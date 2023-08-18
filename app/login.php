@@ -1,9 +1,14 @@
-<?php include_once('../config.php');
-if (isset($_SESSION['User']))
+
+<?php 
+session_start();
+include_once('../config.php');
+
+if (isset($_SESSION['user']))
 {
-    header('Location: home.php');
+    redirect('/app/home.php');
     exit();
 }
+
 ?>
 <html lang="en">
 
@@ -157,7 +162,7 @@ if (isset($_SESSION['User']))
                     // data:form.serialize(),
                     // serializes the form's elements.
                     success: function (data) {
-                        console.log(data.results);
+                        // console.log(data.results);
                         setTimeout(function(){
                             toastr.options = {
                                     closeButton: true,
@@ -166,11 +171,17 @@ if (isset($_SESSION['User']))
                                 };
                                 toastr.success('Login successful');
                                     if(data.results.is_admin==1){
-                                        console.log('yser')
+                                        console.log('Admin User')
                                         window.location.href = "../admin/index.php";
                                     }
                                     else{
-                                        window.location.href = "./";
+                                        if (data.results?.expiry){
+                                        window.location.href = "./membership.php";
+
+                                        }else{
+
+                                            window.location.href = "./";
+                                        }
 
                                     }
 

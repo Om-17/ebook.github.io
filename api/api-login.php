@@ -1,7 +1,7 @@
 <?php
 
 include_once('../classes/user.php');
-
+include_once('../classes/DBclass.php');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
@@ -43,6 +43,36 @@ if($request_method == 'POST'){
                     "last_login"=>  date("Y-m-d H:i:s")
                 ];
                 $updatelastLogin->update('id',$result['id'],$params);
+                if ($result['is_member']) {
+                    $memberObj = new DBClass('member');
+                    $memberresult = $memberObj->filter(['user_id' => $result['id'], 'status' => 'Active']);
+                    if (!isset($memberresult['message'])) {
+                      
+                        $expiryDate = strtotime($memberresult[0]['expiry_date']);
+                        
+                        $currentDate = time(); 
+                
+                        if ($currentDate > $expiryDate) {
+                            $updatelastLogin->update('id', $result['id'], ["is_member" => 0]);
+                            $memberObj->update('id', $memberresult[0]['id'], ['status' => 'Expired']);
+                            $result['is_member'] = 0;
+                            $result["expiry"]=true;
+                          
+                        }
+                        else{
+                            $result["expiry"]=false;
+                
+                         }
+                    }
+                    // Check membership expiry
+                }
+               
+              
+                
+                
+                
+                
+
                 session_start();
                 $_SESSION["user"]=$result;
                 $data["results"]=$result;

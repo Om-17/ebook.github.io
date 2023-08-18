@@ -38,12 +38,20 @@
     </a>
   </li>
 
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" id="users" href="#">
 
       <i class="bi bi-person"></i>
 
       <span>Users</span>
+    </a>
+  </li> -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" id="member" href="./member.php">
+
+      <i class="bi bi-people-fill"></i>
+
+      <span>Member</span>
     </a>
   </li>
 

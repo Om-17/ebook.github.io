@@ -245,16 +245,16 @@
                                     
                                 <div id="mybookDropdown${status}${value.book_id}" class="mybookdropdown-content">
                                     
-                                     <button class="btn " type="button" id="plantoread${value.book_id}${status}" onclick="AddChangeMyBook('Plan-To-Read',${value.book_id})" name="plan_to_read">Plan To Read</button>
+                                     <button class="btn " type="button" id="plantoread${value.book_id}${status}" onclick="ChangeMyBook('Plan-To-Read',${value.book_id})" name="plan_to_read">Plan To Read</button>
                                       
 
-                                         <button class="btn" type="button" id="on_hold${value.book_id}${status}" onclick="AddChangeMyBook( 'On-Hold',${value.book_id})" name="on_hold">On-Hold</button>
+                                         <button class="btn" type="button" id="on_hold${value.book_id}${status}" onclick="ChangeMyBook( 'On-Hold',${value.book_id})" name="on_hold">On-Hold</button>
                                         
 
-                                         <button class="btn" type="button" id="dropped${value.book_id}${status}" onclick="AddChangeMyBook( 'Dropped',${value.book_id})"   name="dropped">Dropped</button>
+                                         <button class="btn" type="button" id="dropped${value.book_id}${status}" onclick="ChangeMyBook( 'Dropped',${value.book_id})"   name="dropped">Dropped</button>
                                         
                                         
-                                             <button class="btn"   type="button"  id="completed${value.book_id}${status}"  onclick="AddChangeMyBook('Completed',${value.book_id})"  name="completed">Completed</button>
+                                             <button class="btn"   type="button"  id="completed${value.book_id}${status}"  onclick="ChangeMyBook('Completed',${value.book_id})"  name="completed">Completed</button>
                                        
                                 </div>
                             </div>
@@ -294,7 +294,7 @@
 
         // end bookcard
 // change the book status
-function AddChangeMyBook(bookstatus, bookid) {
+function ChangeMyBook(bookstatus, bookid) {
 
 
 
@@ -408,6 +408,8 @@ $.ajax({
         });
         //end
     </script>
+  <?php include_once('../includes/footer.php'); ?>
+
 </body>
 
 </html>

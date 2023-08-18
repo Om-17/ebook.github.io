@@ -63,7 +63,6 @@
 
                     }
                     else{
-
                         $book_result[] = $book_obj->get('book_id', $book_id);
                         
                     }
@@ -95,6 +94,7 @@
 
         }
         else{
+                        $book_obj=new DBClass('books');
 
             $book_result=$book_obj->getAll();
         }

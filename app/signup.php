@@ -5,11 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <?php include_once('../config/css.config.php');
-    if (isset($_SESSION['User'])) {
-        header('Location: home.php');
-        exit();
-    }
+    <?php 
+session_start();
+    
+    include_once('../config/css.config.php');
+if (isset($_SESSION['user']))
+{
+    redirect('/app/home.php');
+    exit();
+}
     ?>
     <title>eBooks</title>
 </head>
@@ -183,7 +187,7 @@
                 }
             });
             $('#confirm_password').keyup(function() {
-                var cpassword = $(this).val();
+                var cpassword = $('#confirm_password').val();
                 var password = $('#password').val();
                 if (password == cpassword) {
                     $('#confirm_password').removeClass('is-invalid')
@@ -261,6 +265,8 @@
                     $('#password-invalid').addClass("d-block")
                     return
                 }
+                var cpassword = $('#confirm_password').val();
+
                 if (password != cpassword) {
 
                     $('#confirm-password').addClass('is-invalid')

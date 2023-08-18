@@ -10,42 +10,7 @@ class DBClass extends DBconnection
     $this->table = $tablename;
   }
 
-  // public function create($params)
-  // {
-  //     $context = [];
 
-  //     $columns = array_keys($params);
-  //     $values = array_values($params);
-
-  //     $columnNames = implode(", ", $columns);
-  //     $placeholders = implode(", :", $columns);
-
-  //     $sql = "INSERT INTO $this->table ($columnNames) VALUES (:$placeholders)";
-
-  //     try {
-  //         $stmt = $this->conn->prepare($sql);
-
-  //         foreach ($params as $key => &$value) {
-  //             $stmt->bindValue(":$key", $value);
-  //         }
-
-  //         $stmt->execute();
-
-  //         $context = array(
-  //             "message" => "Record created successfully.",
-  //             "status" => true
-  //         );
-  //     } catch (\Throwable $th) {
-  //         $errorMessage = $th->getMessage();
-  //         // Handle the error as per your requirements
-  //         $context = array(
-  //             "error" => $errorMessage,
-  //             "status" => false
-  //         );
-  //     }
-
-  //     return $context;
-  // }
   public function create($params)
   {
     $context = [];
@@ -57,7 +22,7 @@ class DBClass extends DBconnection
     $placeholders = implode(", :", $columns);
 
     $sql = "INSERT INTO $this->table ($columnNames) VALUES (:$placeholders)";
-
+   
     try {
       $stmt = $this->conn->prepare($sql);
 
@@ -77,11 +42,11 @@ class DBClass extends DBconnection
       $errorMessage = $th->getMessage();
       // Handle the error as per your requirements
       $context = array(
-        "error" => $errorMessage,
+        "error" => "$errorMessage",
         "status" => 0
       );
     } finally {
-      $stmt->closeCursor();
+      // $stmt->closeCursor();
     }
 
     return $context;
@@ -245,138 +210,10 @@ class DBClass extends DBconnection
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    return $result;
+    return $result; 
   }
 
-  // public function filter($filter_conditions)
-  // {
 
-  //   $context = [];
-
-
-  //   $sql = "SELECT * FROM $this->table WHERE ";
-  //   $conditions = [];
-
-  //   foreach ($filter_conditions as $column => $value) {
-  //     $conditions[] = "$column = :$column";
-  //   }
-
-  //   $sql .= implode(" AND ", $conditions);
-
-  //   $stmt = $this->conn->prepare($sql);
-
-  //   foreach ($filter_conditions as $column => $value) {
-  //     $stmt->bindValue(":$column", $value);
-  //   }
-
-  //   $stmt->execute();
-  //   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  //   $conn = null;
-  //   if ($results == null) {
-  //     $context['message'] = "Not found recond";
-  //     return $context;
-  //   }
-  //   return $results;
-  // }
-  // public function filter($filter_conditions)
-  // {
-  //   $context = [];
-
-  //   $sql = "SELECT * FROM $this->table WHERE ";
-  //   $conditions = [];
-
-  //   foreach ($filter_conditions as $field => $value) {
-  //     $conditions[] = $this->generateCondition($field, $value);
-  //   }
-
-  //   $sql .= implode(" AND ", $conditions);
-
-  //   $stmt = $this->conn->prepare($sql);
-
-  //   foreach ($filter_conditions as $field => $value) {
-  //     $this->bindValueWithLookup($stmt, $field, $value);
-  //   }
-
-  //   $stmt->execute();
-  //   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  //   $this->conn = null;
-
-  //   if ($results == null) {
-  //     $context['message'] = "Record not found";
-  //     return $context;
-  //   }
-
-  //   return $results;
-  // }
-
-  // private function generateCondition($field, $value)
-  // {
-  //   $lookups = [
-  //     'exact' => '=',
-  //     'iexact' => 'ILIKE',
-  //     'contains' => 'LIKE',
-  //     'startswith' => 'LIKE',
-  //     'endswith' => 'LIKE',
-  //     'gt' => '>',
-  //     'lt' => '<',
-  //     'gte' => '>=',
-  //     'lte' => '<=',
-  //     // Add more lookups as needed
-  //   ];
-
-  //   $parts = explode('__', $field);
-  //   $column = $parts[0];
-  //   $lookup = 'exact';
-
-  //   if (count($parts) > 1 && isset($lookups[$parts[1]])) {
-  //     $lookup = $parts[1];
-  //   }
-
-  //   if ($lookup === 'exact') {
-  //     return "$column = :$field";
-  //   } elseif (in_array($lookup, ['startswith', 'endswith'])) {
-  //     return "$column {$lookups[$lookup]} :$field";
-  //   } else {
-  //     return "$column {$lookups[$lookup]} :$field";
-  //   }
-  // }
-
-  // private function bindValueWithLookup($stmt, $field, $value)
-  // {
-  //   $parts = explode('__', $field);
-  //   $column = $parts[0];
-
-  //   if (count($parts) > 1) {
-  //     $lookup = $parts[1];
-  //     switch ($lookup) {
-  //       case 'iexact':
-  //         $stmt->bindValue(":$field", $value, PDO::PARAM_STR);
-  //         break;
-  //       case 'contains':
-  //         $stmt->bindValue(":$field", "%$value%", PDO::PARAM_STR);
-  //         break;
-  //       case 'startswith':
-  //         $stmt->bindValue(":$field", "$value%", PDO::PARAM_STR);
-  //         break;
-  //       case 'endswith':
-  //         $stmt->bindValue(":$field", "%$value", PDO::PARAM_STR);
-  //         break;
-  //       case 'gt':
-  //       case 'lt':
-  //       case 'gte':
-  //       case 'lte':
-  //         $stmt->bindValue(":$field", $value, PDO::PARAM_INT);
-  //         break;
-  //       // Add more lookup cases as needed
-  //       default:
-  //         throw new Exception("Invalid lookup: $lookup");
-  //     }
-  //   } else {
-  //     $stmt->bindValue(":$field", $value);
-  //   }
-  // }
 
   public function filter($filter_conditions)
   {
