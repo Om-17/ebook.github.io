@@ -193,4 +193,6 @@ $genres_result = $genres_obj->limit(10)->get();
   </div>
 </header>
 
+
+<button onclick="topFunction()" id="gototopbtn" title="Go to top">Top</button>
 <?php $genres_obj = null; ?>

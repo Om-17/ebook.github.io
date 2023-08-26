@@ -9,4 +9,5 @@ if(!defined('rzp_api_key')) define('rzp_api_key','rzp_test_ihFYjIXO7KZ1nD');
 if(!defined('logo_img')) define('logo_img',base_url.'/assets/img/booklogo.png');
 if(!defined('company_name')) define('company_name','Bookwise');
 
+
 ?>

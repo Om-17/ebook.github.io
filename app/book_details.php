@@ -338,12 +338,12 @@
                         <button id="read"  class="m-0 read-book-btn login-btn">Read Book</button>';
                     } else {
                         echo '
-                                        <a  href="app/membership.php" class="btn btn-warning">Subscribe</a>
+                                        <a  href="./membership.php" class="btn btn-warning">Subscribe</a>
                                         ';
                     }
                 } else {
                     echo '
-                                        <a  href="app/membership.php" class="btn btn-warning">Subscribe</a>
+                                        <a  href="./membership.php" class="btn btn-warning">Subscribe</a>
                                         ';
                 }
             }
