@@ -310,7 +310,7 @@ p
 }
 
 .radial-out-btn {
-  /* padding: 7px 20px; */
+  
   padding: 7px 20px;
   border-radius: 6px;
   border-width: 2px;
@@ -319,8 +319,7 @@ p
   outline: var(--secondary-color);
   outline-offset: 0px;
   outline-width: 1px;
-  outline-style: solid;
-  /* font-size: px; */
+
   margin-left: 15px;
   cursor: pointer;
 

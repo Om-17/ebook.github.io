@@ -91,7 +91,7 @@ if (isset($_SESSION['user']))
                                         password?</a> -->
                                     <p
                                         class=" col-lg-8 col-xl-8 col-xxl-8 col-md-12 col-sm-12 col-xs-12 login-card-footer-text mt-2 h6">
-                                        Don't have an account? <a href="./signup"
+                                        Don't have an account? <a href="./signup.php"
                                             class=" register-text text-reset">Register here</a></p>
                                 </div>
 
