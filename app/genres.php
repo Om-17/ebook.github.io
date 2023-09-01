@@ -14,6 +14,8 @@
 <?php include_once('../config/js.config.php') ?>
 
     <?php include_once('../includes/header.php');
+        $book_obj = new DBclass('books');
+
     if (isset($_REQUEST['genre'])) {
 
         $encrypted_genre_id = $_REQUEST['genre'];
@@ -36,7 +38,6 @@
         $uniqueBookIds = array();
         $uniqueGenres = array();
         $book_result = array();
-        $book_obj = new DBclass('books');
         if (!empty($genresbookResult)) {
             foreach ($genresbookResult as $key => $value) {
 

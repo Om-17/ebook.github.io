@@ -588,7 +588,7 @@
                                                 <div class="did-floating-label-content">
 
                                                     <label for="book_image" class="form-label p-0 mb-1 " style="font-size:16px">Book Image</label>
-                                                    <input class="form-control form-control-sm" name="book_image" id="book_image" accept=".jpg .png .jpeg " type="file">
+                                                    <input class="form-control form-control-sm" name="book_image" id="book_image"accept=".jfif,.png,.jpeg,.jpg" type="file">
                                                 </div>
                                             </div>
                                             <div class=" col-4 col-sm-12 col-xs-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4 col-xxxl-4 ">
