@@ -243,11 +243,11 @@ if(isset($_POST['book_id'])){
                 $genrecountparam = [
                                 "genre_id" => $create_value
                             ];
-                            $count_genres = $book_genres_obj->count($genrecountparam) + 1;
+                         
                 $genres_param = [
                                 "book_id" => $book_id,
                                 "genre_id" => $create_value,
-                                "counter" => $count_genres
+                                
                             ];
                 $book_genres_obj->create($genres_param);
 

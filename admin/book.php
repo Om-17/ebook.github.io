@@ -162,7 +162,13 @@
                                             $genres_book = $book_genresobj->filter(['book_id' => $value['book_id']]);
                                             $genres_id = [];
                                             foreach ($genres_book as $genres_value) {
-                                                $genres_id[] = $genres_value['genre_id'];
+                                                if (isset($genres_value['genre_id'])){
+
+                                                    if ($genres_value['genre_id'] != '' && !is_null($genres_value['genre_id'])){
+    
+                                                        $genres_id[] = $genres_value['genre_id'];
+                                                    }
+                                                }
                                             } ?>
 
                                             <script type="text/javascript">

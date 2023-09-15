@@ -54,7 +54,7 @@
     <main>
         <div class="container-genre">
             <div class="row w-100 mt-4">
-                <div  class="col-12 order-md-1 order-2 order-lg-1 order-xl-1 p-0 order-xs-2 order-sm-2 order-xxl-1 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 col-md-3 col-xxxl-3 bg-light rounded">
+                <div style="height: fit-content;" class="col-12 order-md-1 order-2 order-lg-1 order-xl-1 p-0 order-xs-2 order-sm-2 order-xxl-1 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 col-md-3 col-xxxl-3 bg-light rounded">
                     <form action="./authors.php" method="GET" class="w-100 filter">
                         <div class="genres-filter">
 

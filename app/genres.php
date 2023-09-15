@@ -11,16 +11,15 @@
 </head>
 
 <body>
-<?php include_once('../config/js.config.php') ?>
+    <?php include_once('../config/js.config.php') ?>
 
     <?php include_once('../includes/header.php');
-        $book_obj = new DBclass('books');
-
+    $book_obj = new DBclass('books');
     if (isset($_REQUEST['genre'])) {
 
         $encrypted_genre_id = $_REQUEST['genre'];
         $genre_id = array();
-        
+
         foreach ($encrypted_genre_id as $key => $value) {
             $genre_id[] = base64_decode($value);
         }
@@ -41,65 +40,60 @@
         if (!empty($genresbookResult)) {
             foreach ($genresbookResult as $key => $value) {
 
-           
+
                 $book_id = $value[0]['book_id'];
                 if (!in_array($book_id, $uniqueBookIds)) {
                     $uniqueBookIds[] = $book_id;
                     $uniqueGenres[] = $value;
-                    if(isset($_REQUEST['language'])){
-                        $book_language=$_REQUEST['language'];
-                        if($_REQUEST['language'] =='all'){
+                    if (isset($_REQUEST['language'])) {
+                        $book_language = $_REQUEST['language'];
+                        if ($_REQUEST['language'] == 'all') {
 
                             $book_result[] = $book_obj->get('book_id', $book_id);
-                        }
-                        elseif($_REQUEST['language'] =='hindi'){
-                            $book_result[] = $book_obj->filter(['book_id'=>$book_id,'book_language'=>$book_language]);
+                        } elseif ($_REQUEST['language'] == 'hindi') {
+                            $book_result[] = $book_obj->filter(['book_id' => $book_id, 'book_language' => $book_language]);
 
-                        }
-                        else{
-                         
-                            $book_result[] = $book_obj->filter(['book_id'=>$book_id,'book_language'=>$book_language]);
+                        } else {
+
+                            $book_result[] = $book_obj->filter(['book_id' => $book_id, 'book_language' => $book_language])[0];
 
                         }
 
-                    }
-                    else{
+                    } else {
                         $book_result[] = $book_obj->get('book_id', $book_id);
-                        
+
                     }
                 }
             }
         }
-               // end
+        // end
         // print_r($book_result);
         // all genres    
-      
+    
     } else {
-        if(isset($_REQUEST['language'])){
-            $book_language=$_REQUEST['language'];
-            if(isset($_REQUEST['language'])){
-                if($_REQUEST['language']=='all'){
+        if (isset($_REQUEST['language'])) {
+            $book_language = $_REQUEST['language'];
+            if (isset($_REQUEST['language'])) {
+                if ($_REQUEST['language'] == 'all') {
 
                     $book_result = $book_obj->getAll();
-                }
-                else{
-                 
-                    $book_result = $book_obj->filter(['book_language'=>$book_language]);
-                    if(isset($book_result['message'])){
-                        $book_result=[];
+                } else {
+
+                    $book_result = $book_obj->filter(['book_language' => $book_language]);
+                    if (isset($book_result['message'])) {
+                        $book_result = [];
                     }
                 }
 
             }
-           
 
-        }
-        else{
-                        $book_obj=new DBClass('books');
 
-            $book_result=$book_obj->getAll();
+        } else {
+            $book_obj = new DBClass('books');
+
+            $book_result = $book_obj->getAll();
         }
-        // redirect('./app/home.php');
+
     }
 
     $genres_obj = new DBclass('genres');
@@ -111,7 +105,8 @@
     <main>
         <div class="container-genre">
             <div class="row w-100 mt-4 p-0">
-                <div class="col-12 order-md-1 order-2 order-lg-1 order-xl-1 p-0 order-xs-2 order-sm-2 order-xxl-1 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 col-md-3 col-xxxl-3 bg-light rounded">
+                <div style="height: fit-content;"
+                    class="col-12 order-md-1 order-2 order-lg-1  order-xl-1 p-0 order-xs-2 order-sm-2 order-xxl-1 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 col-md-3 col-xxxl-3 bg-light rounded">
                     <form action="./genres.php" method="GET" class="w-100 filter">
                         <div class="language-filter mb-4">
                             <h5 class="form-label">
@@ -160,21 +155,22 @@
 
                     </form>
                 </div>
-                <div class="col-12 order-md-1 order-1 order-lg-2 order-xl-2 order-xs-1 p-0 order-sm-1 order-xxl-2 col-sm-12 col-xs-12 col-lg-9 col-xl-9 col-xxl-9 col-md-9 col-xxxl-9">
+                <div
+                    class="col-12 order-md-1 order-1 order-lg-2 order-xl-2 order-xs-1 p-0 order-sm-1 order-xxl-2 col-sm-12 col-xs-12 col-lg-9 col-xl-9 col-xxl-9 col-md-9 col-xxxl-9">
                     <?php
 
                     if (!empty($genre_id)) {
                         foreach ($genre_id as $key => $value) {
                             echo '<script>
-                            $("#genres_search'. $value .'").prop("checked", true);
+                            $("#genres_search' . $value . '").prop("checked", true);
                            </script>';
-                            $genres_result= $genres_obj->get('genre_id',$value);
-                            $genre_name[]=$genres_result['genre_name'];
+                            $genres_result = $genres_obj->get('genre_id', $value);
+                            $genre_name[] = $genres_result['genre_name'];
                         }
                         $genre_name_string = implode(', ', $genre_name);
                         echo '
                             <div class="heading-section">
-                            <h1>' .$genre_name_string. '</h1>
+                            <h1>' . $genre_name_string . '</h1>
                         </div>
                             ';
 
@@ -186,7 +182,7 @@
                             
                             ';
                     }
-                    if (empty($book_result)) {
+                    if (empty($book_result) || isset($book_result[0]['message'])) {
                         echo '
                               <div class="w-100 not-found">
                                 <div class="d-flex not-found-img justify-content-center">
@@ -202,50 +198,54 @@
                     }
                     ?>
                     <div class="container-fluid ">
-                        
+
                         <div class="row">
                             <?php
-                            foreach ($book_result as $key => $value) {
-                                
-                                $authorobj=new  DBclass('authors');
-                                $authorname=$authorobj->get("author_id",$value['author_id']);
-                                echo '
-                                <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 col-xxxl-4">
-                                    <a class="text-decoration-none" href="./book_details.php?book_id='.$value['book_id'].'">
-                                    <div class="book-card position-relative w-100">
-                                        <div class=" badge position-absolute  bg-danger">
-                                        <span>'.$value['book_type'].'</span>
-                                        </div>
-                                        <div class="book-card__cover">
-                                            <div class="book-card__book">
-                                                <div class="book-card__book-front">
-                                                    <img class="book-card__img img-fluid" src="'.base_url.$value["book_image"].'" />
-                                                </div>
-                                                <div class="book-card__book-back"></div>
-                                                <div class="book-card__book-side"></div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="book-card__title">
-                                                <div class="row">
-                                                    <h3 class="col-12 text-capitalize text-center text-truncate">
-                                                    '.$value['book_title'].'
-                                                    </h3>
-                                                </div>
+                            // print_r($book_result);
+                            if (!isset($book_result[0]['message'])){
 
+                                foreach ($book_result as $key => $value) {
+    
+                                    $authorobj = new DBclass('authors');
+                                    $authorname = $authorobj->get("author_id", $value['author_id']);
+                                    echo '
+                                    <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 col-xxxl-4">
+                                        <a class="text-decoration-none" href="./book_details.php?book_id=' . $value['book_id'] . '">
+                                        <div class="book-card position-relative w-100">
+                                            <div class=" badge position-absolute  bg-danger">
+                                            <span>' . $value['book_type'] . '</span>
                                             </div>
-                                            <div class="book-card__author text-capitalize text-center">
-                                            '.$authorname['author_name'].'
+                                            <div class="book-card__cover">
+                                                <div class="book-card__book">
+                                                    <div class="book-card__book-front">
+                                                        <img class="book-card__img img-fluid" src="' . base_url . $value["book_image"] . '" />
+                                                    </div>
+                                                    <div class="book-card__book-back"></div>
+                                                    <div class="book-card__book-side"></div>
+                                                </div>
                                             </div>
+                                            <div>
+                                                <div class="book-card__title">
+                                                    <div class="row">
+                                                        <h3 class="col-12 text-capitalize text-center text-truncate">
+                                                        ' . $value['book_title'] . '
+                                                        </h3>
+                                                    </div>
+    
+                                                </div>
+                                                <div class="book-card__author text-capitalize text-center">
+                                                ' . $authorname['author_name'] . '
+                                                </div>
+                                            </div>
+    
                                         </div>
-
+                                        </a>
+                                        
                                     </div>
-                                    </a>
+                              
                                     
-                                </div>
-                          
-                                
-                                ';
+                                    ';
+                                }
                             }
 
                             ?>
@@ -266,12 +266,12 @@
     </main>
 
     <?php include_once('../includes/footer.php');
-    $book_obj=null;
-    $authorobj=null;
-    $genres_obj=null;
-    $genresbookObj=null;
-    
-    
+    $book_obj = null;
+    $authorobj = null;
+    $genres_obj = null;
+    $genresbookObj = null;
+
+
     ?>
 
 </body>

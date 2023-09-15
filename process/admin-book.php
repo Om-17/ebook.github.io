@@ -158,11 +158,10 @@ if(isset($_POST['book_title'])){
                 $genrecountparam = [
                     "genre_id" => $value
                 ];
-                $count_genres = $book_genres->count($genrecountparam) + 1;
                 $genres_param = [
                     "book_id" => $result['last_id'],
                     "genre_id" => $value,
-                    "counter" => $count_genres
+                   
                 ];
     
                 // echo "Genres count: " . $count_genres;
