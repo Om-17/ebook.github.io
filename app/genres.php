@@ -37,39 +37,89 @@
         $uniqueBookIds = array();
         $uniqueGenres = array();
         $book_result = array();
+
+        // print_r($genresbookResult);
+        // if (!empty($genresbookResult)) {
+        //     foreach ($genresbookResult[0] as $key => $value) {
+    
+        //         $book_id = $value['book_id'];
+        //         if (!in_array($book_id, $uniqueBookIds)) {
+        //             $uniqueBookIds[] = $book_id;
+        //             $uniqueGenres[] = $value;
+        //             if (isset($_REQUEST['language'])) {
+        //                 $book_language = $_REQUEST['language'];
+        //                 if ($_REQUEST['language'] == 'all') {
+        //                     $book_result[] = $book_obj->filter(['book_id' => $book_id])[0];
+    
+        //                 } elseif ($_REQUEST['language'] == 'hindi') {
+        //                     $edata = $book_obj->filter(['book_id' => $book_id, 'book_language' => $book_language]);
+    
+        //                     if(!empty($edata)){
+        //                         if(!isset($edata['message'])){
+        //                             $book_result[]=$edata;
+    
+        //                         }
+        //                     }
+    
+
+        //                 } else {
+    
+        //                     $book_result[] = $book_obj->filter(['book_id' => $book_id, 'book_language' => $book_language])[0];
+    
+        //                 }
+    
+        //             } else {
+        //                 $book_result[] = $book_obj->filter(['book_id' => $book_id])[0];
+    
+        //             }
+        //         }
+        //     }
+        // }
         if (!empty($genresbookResult)) {
-            foreach ($genresbookResult as $key => $value) {
-
-
-                $book_id = $value[0]['book_id'];
+            foreach ($genresbookResult[0] as $key => $value) {
+                $book_id = $value['book_id'];
                 if (!in_array($book_id, $uniqueBookIds)) {
                     $uniqueBookIds[] = $book_id;
-                    $uniqueGenres[] = $value;
+
+                    // Check if 'book_language' is set in the request
                     if (isset($_REQUEST['language'])) {
                         $book_language = $_REQUEST['language'];
-                        if ($_REQUEST['language'] == 'all') {
 
-                            $book_result[] = $book_obj->get('book_id', $book_id);
-                        } elseif ($_REQUEST['language'] == 'hindi') {
-                            $book_result[] = $book_obj->filter(['book_id' => $book_id, 'book_language' => $book_language]);
-
+                        // Handle different language cases
+                        if ($book_language == 'all') {
+                            // Get all languages for the book
+                            $book_result[] = $book_obj->filter(['book_id' => $book_id])[0];
+                        } elseif ($book_language == 'hindi') {
+                            $edata = $book_obj->filter(['book_id' => $book_id, 'book_language' => $book_language]);
+                          
+                            foreach ($edata as $record) {
+                                
+                                if ($record!="Record not found") {
+                                    $book_result[] = $record;
+                                }
+                            }
                         } else {
-
-                            $book_result[] = $book_obj->filter(['book_id' => $book_id, 'book_language' => $book_language])[0];
-
+                            // Get a specific language
+                            $specific_language = $book_obj->filter(['book_id' => $book_id, 'book_language' => $book_language]);
+                            foreach ($specific_language as $record) {
+                                
+                                if ($record!="Record not found") {
+                                    $book_result[] = $record;
+                                }
+                            }
                         }
-
                     } else {
-                        $book_result[] = $book_obj->get('book_id', $book_id);
-
+                        // If 'language' is not set, get all languages for the book
+                        $book_result[] = $book_obj->filter(['book_id' => $book_id]);
                     }
                 }
             }
+
         }
+        
         // end
         // print_r($book_result);
         // all genres    
-    
     } else {
         if (isset($_REQUEST['language'])) {
             $book_language = $_REQUEST['language'];
@@ -80,6 +130,7 @@
                 } else {
 
                     $book_result = $book_obj->filter(['book_language' => $book_language]);
+
                     if (isset($book_result['message'])) {
                         $book_result = [];
                     }
@@ -202,51 +253,68 @@
                         <div class="row">
                             <?php
                             // print_r($book_result);
-                            if (!isset($book_result[0]['message'])){
+                            try {
+                                if (!isset($book_result[0]['message'])) {
 
-                                foreach ($book_result as $key => $value) {
+                                    foreach ($book_result as $key => $value) {
     
-                                    $authorobj = new DBclass('authors');
-                                    $authorname = $authorobj->get("author_id", $value['author_id']);
-                                    echo '
-                                    <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 col-xxxl-4">
-                                        <a class="text-decoration-none" href="./book_details.php?book_id=' . $value['book_id'] . '">
-                                        <div class="book-card position-relative w-100">
-                                            <div class=" badge position-absolute  bg-danger">
-                                            <span>' . $value['book_type'] . '</span>
-                                            </div>
-                                            <div class="book-card__cover">
-                                                <div class="book-card__book">
-                                                    <div class="book-card__book-front">
-                                                        <img class="book-card__img img-fluid" src="' . base_url . $value["book_image"] . '" />
+                                        $authorobj = new DBclass('authors');
+                                        $authorname = $authorobj->get("author_id", $value['author_id']);
+                                        echo '
+                                        <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 col-xxxl-4">
+                                            <a class="text-decoration-none" href="./book_details.php?book_id=' . $value['book_id'] . '">
+                                            <div class="book-card position-relative w-100">
+                                                <div class=" badge position-absolute  bg-danger">
+                                                <span>' . $value['book_type'] . '</span>
+                                                </div>
+                                                <div class="book-card__cover">
+                                                    <div class="book-card__book">
+                                                        <div class="book-card__book-front">
+                                                            <img class="book-card__img img-fluid" src="' . base_url . $value["book_image"] . '" />
+                                                        </div>
+                                                        <div class="book-card__book-back"></div>
+                                                        <div class="book-card__book-side"></div>
                                                     </div>
-                                                    <div class="book-card__book-back"></div>
-                                                    <div class="book-card__book-side"></div>
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <div class="book-card__title">
-                                                    <div class="row">
-                                                        <h3 class="col-12 text-capitalize text-center text-truncate">
-                                                        ' . $value['book_title'] . '
-                                                        </h3>
+                                                <div>
+                                                    <div class="book-card__title">
+                                                        <div class="row">
+                                                            <h3 class="col-12 text-capitalize text-center text-truncate">
+                                                            ' . $value['book_title'] . '
+                                                            </h3>
+                                                        </div>
+        
                                                     </div>
-    
+                                                    <div class="book-card__author text-capitalize text-center">
+                                                    ' . $authorname['author_name'] . '
+                                                    </div>
                                                 </div>
-                                                <div class="book-card__author text-capitalize text-center">
-                                                ' . $authorname['author_name'] . '
-                                                </div>
+        
                                             </div>
-    
+                                            </a>
+                                            
                                         </div>
-                                        </a>
+                                  
                                         
-                                    </div>
-                              
-                                    
-                                    ';
+                                        ';
+                                    }
                                 }
+                                //code...
+                            } catch (\Throwable $th) {
+                                echo '
+                                <div class="w-100 not-found">
+                                  <div class="d-flex not-found-img justify-content-center">
+                                    <img style="width:400px ;" src="../assets/img/not-found.svg" alt="">
+                                  </div>
+                                  <div class="not-found-heading">
+                                    <h2>
+                                      Not Found Book
+                                    </h2>
+                                  </div>
+                                </div>
+                              ';
                             }
+                           
 
                             ?>
 
