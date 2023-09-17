@@ -32,7 +32,12 @@
         $genresbookResult = array_filter($genresbookResult, function ($result) {
             return !isset($result['message']) || $result['message'] !== 'Record not found';
         });
-
+        $resultgenresArray=[];
+        foreach ($genresbookResult as $subArray) {
+            foreach ($subArray as $item) {
+                $resultgenresArray[] = $item;
+            }
+        }
         // book unique filter
         $uniqueBookIds = array();
         $uniqueGenres = array();
@@ -75,8 +80,10 @@
         //         }
         //     }
         // }
-        if (!empty($genresbookResult)) {
-            foreach ($genresbookResult[0] as $key => $value) {
+        // print_r(array_filter($resultgenresArray));
+        // print_r(array_filter($genresbookResult));
+        if (!empty($resultgenresArray)) {
+            foreach ($resultgenresArray as $key => $value) {
                 $book_id = $value['book_id'];
                 if (!in_array($book_id, $uniqueBookIds)) {
                     $uniqueBookIds[] = $book_id;
@@ -110,7 +117,7 @@
                         }
                     } else {
                         // If 'language' is not set, get all languages for the book
-                        $book_result[] = $book_obj->filter(['book_id' => $book_id]);
+                        $book_result[] = $book_obj->filter(['book_id' => $book_id])[0];
                     }
                 }
             }

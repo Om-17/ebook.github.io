@@ -349,6 +349,9 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 //   $author = null;
 
   ?>
+   <script>
+    $('#author').removeClass('collapsed') 
+  </script>
 </body>
 
 </html>

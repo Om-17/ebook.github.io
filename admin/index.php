@@ -30,6 +30,12 @@ $genres = new DBclass('genres');
 $totalgenres = $genres->count([]);
 $book = new DBclass('books');
 $totalbooks = $book->count([]);
+$author = new DBclass('authors');
+$totalauthor = $author->count([]);
+$publisher = new DBclass('publishers');
+$totalpublisher = $publisher->count([]);
+$memberobj = new DBclass('member');
+$totalmember=$memberobj->count([]);
 ?>
 </head>
 
@@ -143,6 +149,79 @@ $totalbooks = $book->count([]);
           </div>
         </div>
         <!-- End Book Card -->
+        <!-- Authors Card -->
+        <div class="col-xxl-4 col-md-6 col-lg-4 col-sm-12">
+          <div class="card info-card customers-card ">
+
+
+
+            <div class="card-body">
+              <h5 class="card-title">Authors</h5>
+
+              <div class="d-flex align-items-center">
+                <div style="background-color: #EDE7F6; color: #512DA8;" class=" card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-person-lines-fill"></i>
+                </div>
+                <div class="ps-3">
+                  <h6>
+                    <?php echo $totalauthor; ?> Authors
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- End Authors Card -->
+        <!-- Publishers Card -->
+        <div class="col-xxl-4 col-md-6 col-lg-4 col-sm-12">
+          <div class="card info-card customers-card ">
+
+
+
+            <div class="card-body">
+              <h5 class="card-title">Publishers</h5>
+
+              <div class="d-flex align-items-center">
+                <div style="background-color: #FFEBEE; color: #D32F2F;" class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+               
+                <i class="bi bi-globe2"></i></div>
+                <div class="ps-3">
+                  <h6>
+                    <?php echo $totalpublisher; ?> Publishers
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- End Publishers Card -->
+        <!-- Member Card -->
+        <div class="col-xxl-4 col-md-6 col-lg-4 col-sm-12">
+          <div class="card info-card customers-card ">
+
+
+
+            <div class="card-body">
+              <h5 class="card-title">Member</h5>
+
+              <div class="d-flex align-items-center">
+                <div  style="background-color:#E0F2F1; color: #00796B;" class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+      <i class="bi bi-people-fill"></i>
+                
+                </div>
+                <div class="ps-3">
+                  <h6>
+                    <?php echo $totalmember; ?> Member
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- End Member Card -->
 
       </div>
     </section>
