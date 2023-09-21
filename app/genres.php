@@ -180,7 +180,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="genres-filter">
+                        <div style="height: 600px;" class="genres-filter">
 
                             <h5 class="form-label">
                                 Genres:

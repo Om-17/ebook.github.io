@@ -1839,7 +1839,7 @@ color: var(--active-primary-color)
 }
 .genres-filter{
   width: 100%;
-  height: 90vh !important;
+
   overflow: auto;
   /* padding:20px; */
 
