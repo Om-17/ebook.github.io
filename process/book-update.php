@@ -1,3 +1,19 @@
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <?php include_once('../config/css.config.php') ?>
+    <title>eBooks</title>
+
+</head>
+
+<body>
+    <?php 
+    include_once('../loader.php');
+    ?>
+
 <?php 
 
 
@@ -293,3 +309,5 @@ $book_obj=null;
 
 
 ?>
+</body>
+</html>

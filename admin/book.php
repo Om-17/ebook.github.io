@@ -413,7 +413,7 @@
     
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                                    <button type="submit" class="btn btn-primary">Update</button>
                                                                 </div>
                                                         </form>
                                                      </div>

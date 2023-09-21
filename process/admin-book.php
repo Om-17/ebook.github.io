@@ -1,3 +1,20 @@
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <?php include_once('../config/css.config.php') ?>
+    <title>eBooks</title>
+
+</head>
+
+<body>
+    <?php 
+    include_once('../loader.php');
+    ?>
+
 <?php
 include_once('../config.php');
 require_once('../classes/DBclass.php');
@@ -253,3 +270,5 @@ if(isset($_POST['delete_id'])){
 
 
 ?>
+</body>
+</html>
