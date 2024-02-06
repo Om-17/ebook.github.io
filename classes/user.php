@@ -9,7 +9,7 @@ class User extends DBconnection implements ModelsInterface
   public $password;
   public $email;
   public $last_name;
-  public $mobile_no;
+ 
   public $is_admin = false;
   public function create()
   {
@@ -60,8 +60,8 @@ class User extends DBconnection implements ModelsInterface
     }
 
 
-    $sql = "INSERT INTO users (first_name, last_name, username, password, email,mobile_no,is_admin)
-            VALUES (:first_name, :last_name, :username, :password, :email,:mobile_no,:is_admin)";
+    $sql = "INSERT INTO users (first_name, last_name, username, password, email,is_admin)
+            VALUES (:first_name, :last_name, :username, :password, :email,:is_admin)";
 
     // prepare statement
     $stmt = $this->conn->prepare($sql);
@@ -78,11 +78,7 @@ class User extends DBconnection implements ModelsInterface
     } else {
       $stmt->bindValue(':last_name', null, PDO::PARAM_NULL);
     }
-    if (isset($this->mobile_no)) {
-      $stmt->bindValue(':mobile_no', $this->mobile_no);
-    } else {
-      $stmt->bindValue(':mobile_no', null, PDO::PARAM_NULL);
-    }
+   
 
     $stmt->execute();
     $this->conn = null;
